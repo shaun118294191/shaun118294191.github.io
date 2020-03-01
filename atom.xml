@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-01T05:13:37.010Z</updated>
+    <updated>2020-03-01T05:15:23.734Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,66 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[P2168 [NOI2015]荷马史诗]]></title>
+        <id>https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/</id>
+        <link href="https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/">
+        </link>
+        <updated>2020-03-01T05:13:56.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P2168">题目链接</a><br>
+哈夫曼树也叫最优二叉树，是一种带权路径（叶子节点权值乘该节点到根节点路径长度）之和最短的二叉树。通过哈夫曼树可以构造出哈夫曼编码，可以用于数据压缩和数据加密。</p>
+<p>哈夫曼编码的原理是，利用哈夫曼树中权值越高（数据出现频率越高）的节点到根节点的距离越小（对应哈夫曼编码越短）的性质，将数据压缩成哈夫曼编码。正是由于每一个数据对应于树上的每一个叶子节点，而对应的编码为根到该叶子节点的路径，所以一串哈夫曼编码才能对应惟一的一串原码（即题目中所说si不是sj的前缀。），解码时才不会产生混淆。</p>
+<p>平时我们所说的哈夫曼编码为2进制的，构造的方法也很容易（类似于NOIP2004 合并果子），本题也可以使用相同的思想。</p>
+<p>对于k叉哈夫曼树，仍可以每次从堆中取出最小的k个值。但如果最后一轮循环时堆的大小在2~k - 1之间，则整个哈夫曼树的根的子节点树就小于k，任取叶子节点到根的子节点，答案就会变小。所以需要添加空节点。</p>
+<pre><code class="language-cpp">for (LL i = 1, tmp; i &lt;= n; i++)
+    read(tmp), q.push(node(tmp, 0));
+while ((n - 1) % (k - 1)) n++, q.push(node(0, 0));
+</code></pre>
+<p>本题可用结构体记录单词出现次数，hight of node，优先选择出现次数少的作为叶子节点，其次是节点高度小的优先。最后根节点的高度即为最长的si的最小长度。</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+//huffman tree
+constexpr int MAXN = 1e5 + 5;
+constexpr int LOG = 18;
+using namespace std;
+using LL = long long;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0; 
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+struct node {
+	LL w, h; //height of node
+	node(){}
+	node(LL _w, LL _h) : w(_w), h (_h){}
+	inline bool friend operator &lt; (const node &amp;a, const node &amp;b) {
+		return a.w == b.w ? a.h &gt; b.h : a.w &gt; b.w;
+	}
+};
+priority_queue&lt;node, vector&lt;node&gt;&gt;q; 
+LL n, k;
+int main(){
+	read(n), read(k);
+	for (LL i = 1, tmp; i &lt;= n; i++)
+		read(tmp), q.push(node(tmp, 0));
+	while ((n - 1) % (k - 1)) n++, q.push(node(0, 0));
+	LL sum = 0;
+	while (q.size() &gt; 1) {
+		LL num = 0, h = 0;
+		for (int i = 1; i &lt;= k; i++) {
+			num += q.top().w;
+			h = max(h, q.top().h);
+			q.pop();
+		}
+		sum += num, q.push(node(num, h + 1));
+	}
+	cout &lt;&lt; sum &lt;&lt; endl &lt;&lt; q.top().h &lt;&lt; endl; 
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[P3128 [USACO15DEC]Max Flow P]]></title>
         <id>https://shaun118294191.github.io/post/p3128-usaco15decmax-flow-p/</id>
