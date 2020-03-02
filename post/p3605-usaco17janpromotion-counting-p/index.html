@@ -1,105 +1,102 @@
+<!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" >
+
 <title>P3605 [USACO17JAN]Promotion Counting P | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583121805087">
-<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<meta name="description" content="Valar morghulis Valar Dohaeris">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583123593545">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="stylesheet" href="https://unpkg.com/papercss@1.6.1/dist/paper.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="P3605 [USACO17JAN]Promotion Counting P | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
 
-    <meta name="description" content="题目链接
-一颗n个节点的树，每个节点有一个点权值。求节点iii的子树中比其权值大的节点的个数。
-离散化后对于每个点建立一个动态开点的权值线段树，记录cnt。
-inline Node * newNode(Node * &amp;root) {..." />
-    <meta name="keywords" content="线段树,线段树合并" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
-    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+
   </head>
   <body>
-    <div class="main">
-      <div class="main-content">
-        <div class="site-header">
-  <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583121805087" alt="">
-  </a>
-  <h1 class="site-title">
-    Shaun
-  </h1>
-  <p class="site-description">
-    Valar morghulis Valar Dohaeris
-  </p>
-  <div class="menu-container">
-    
-      
-        <a href="/" class="menu">
-          首页
-        </a>
-      
-    
-      
-        <a href="/archives" class="menu">
-          归档
-        </a>
-      
-    
-      
-        <a href="/tags" class="menu">
-          标签
-        </a>
-      
-    
-      
-        <a href="/post/about" class="menu">
-          关于
-        </a>
-      
-    
+  
+    <nav class="navbar border fixed split-nav">
+  <div class="nav-brand">
+    <h3><a href="https://shaun118294191.github.io">Shaun</a></h3>
   </div>
-  <div class="social-container">
-    
-      
-    
-      
-    
-      
-    
-      
-    
-      
-    
-  </div>
-</div>
-
-        <div class="post-detail">
-          <article class="post">
-            <h2 class="post-title">
-              P3605 [USACO17JAN]Promotion Counting P
-            </h2>
-            <div class="post-info">
-              <span>
-                2020-03-01
-              </span>
-              <span>
-                4 min read
-              </span>
-              
-                <a href="https://shaun118294191.github.io/tag/3SB5eV6YL/" class="post-tag">
-                  # 线段树
-                </a>
-              
-                <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="post-tag">
-                  # 线段树合并
-                </a>
-              
-            </div>
+  <div class="collapsible">
+    <input id="collapsible1" type="checkbox" name="collapsible1">
+    <button>
+      <label for="collapsible1">
+        <div class="bar1"></div>
+        <div class="bar2"></div>
+        <div class="bar3"></div>
+      </label>
+    </button>
+    <div class="collapsible-body">
+      <ul class="inline">
+        
+          <li>
             
-            <div class="post-content-wrapper">
-              <div class="post-content">
-                <p><a href="https://www.luogu.com.cn/problem/P3605">题目链接</a></p>
+              <a href="/" class="menu">
+                首页
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/archives" class="menu">
+                归档
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/tags" class="menu">
+                标签
+              </a>
+            
+          </li>
+        
+          <li>
+            
+              <a href="/post/about" class="menu">
+                关于
+              </a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div id="top" class="row site">
+      <div class="sm-12 md-8 col">
+        <div class="paper">
+          <article class="article">
+            <h1>P3605 [USACO17JAN]Promotion Counting P</h1>
+            <p class="article-meta">
+              2020-03-01
+              
+                <a href="https://shaun118294191.github.io/tag/3SB5eV6YL/" class="badge success">
+                  线段树
+                </a>
+              
+                <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="badge success">
+                  线段树合并
+                </a>
+              
+            </p>
+            
+            <div class="post-content">
+              <p><a href="https://www.luogu.com.cn/problem/P3605">题目链接</a></p>
 <p>一颗n个节点的树，每个节点有一个点权值。求节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>的子树中比其权值大的节点的个数。</p>
 <p>离散化后对于每个点建立一个动态开点的权值线段树，记录cnt。</p>
 <pre><code class="language-cpp">inline Node * newNode(Node * &amp;root) { 
@@ -214,76 +211,156 @@ int main(){
 }
 </code></pre>
 
-              </div>
-              <div class="toc-container">
-                
-              </div>
             </div>
           </article>
         </div>
-
+        <div class="paper" data-aos="fade-in">
+          
+            <div class="next-post">
+              <div class="next">
+                下一篇
+              </div>
+              <a href="https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/">
+                <h3 class="post-title">
+                  P2168 [NOI2015]荷马史诗
+                </h3>
+              </a>
+            </div>
+          
+        </div>
         
-          <div class="next-post">
-            <div class="next">下一篇</div>
-            <a href="https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/">
-              <h3 class="post-title">
-                P2168 [NOI2015]荷马史诗
-              </h3>
-            </a>
-          </div>
-        
+      </div>
 
+      <div class="sm-12 md-4 col sidebar">
+  <div class="paper info-container">
+    <img src="https://shaun118294191.github.io/images/avatar.png?v=1583123593545" class="no-responsive avatar">
+    <div class="text-muted">Valar morghulis Valar Dohaeris</div>
+    <div class="social-container">
+      
         
-
-        <div class="site-footer">
-  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
-    <i class="ri-rss-line"></i> RSS
-  </a>
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      最新文章
+    </div>
+    <div class="row">
+      <ul>
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/t122393-a-la-volonte-du-peuple/">T122393 À la Volonté du Peuple</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/p3605-usaco17janpromotion-counting-p/">P3605 [USACO17JAN]Promotion Counting P</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/">P2168 [NOI2015]荷马史诗</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/p3128-usaco15decmax-flow-p/">P3128 [USACO15DEC]Max Flow P</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/guan-yu/">关于</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/cf617e-xor-and-favorite-number/">CF617E XOR and Favorite Number</a>
+            </li>
+          
+        
+          
+            <li>
+              <a href="https://shaun118294191.github.io/post/hello-gridea/">Hello Gridea</a>
+            </li>
+          
+        
+      </ul>
+    </div>
+  </div>
+  <div class="paper">
+    <div class="sidebar-title">
+      标签列表
+    </div>
+    <div class="row">
+      
+        <a href="https://shaun118294191.github.io/tag/pGIh_ekGW/" class="badge secondary">
+          最短路
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/3SB5eV6YL/" class="badge warning">
+          线段树
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="badge secondary">
+          线段树合并
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/AxY9h2Wzs/" class="badge ">
+          Huffman树
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/PXku6xzNr/" class="badge warning">
+          树上差分
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/T5kNOHu9i/" class="badge ">
+          前缀和
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/l8OsvAAflA/" class="badge secondary">
+          莫队
+        </a>
+      
+        <a href="https://shaun118294191.github.io/tag/ONDzBoJLC/" class="badge success">
+          Gridea
+        </a>
+      
+    </div>
+  </div>
+  <div class="paper">
+    Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">RSS</a>
+  </div>
 </div>
 
-      </div>
+
     </div>
 
-    <script>
-      hljs.initHighlightingOnLoad()
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
 
-      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+<script type="application/javascript">
 
-      // This should probably be throttled.
-      // Especially because it triggers during smooth scrolling.
-      // https://lodash.com/docs/4.17.10#throttle
-      // You could do like...
-      // window.addEventListener("scroll", () => {
-      //    _.throttle(doThatStuff, 100);
-      // });
-      // Only not doing it here to keep this Pen dependency-free.
+AOS.init();
 
-      window.addEventListener("scroll", event => {
-        let fromTop = window.scrollY;
+hljs.initHighlightingOnLoad()
 
-        mainNavLinks.forEach((link, index) => {
-          let section = document.getElementById(decodeURI(link.hash).substring(1));
-          let nextSection = null
-          if (mainNavLinks[index + 1]) {
-            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
-          }
-          if (section.offsetTop <= fromTop) {
-            if (nextSection) {
-              if (nextSection.offsetTop > fromTop) {
-                link.classList.add("current");
-              } else {
-                link.classList.remove("current");    
-              }
-            } else {
-              link.classList.add("current");
-            }
-          } else {
-            link.classList.remove("current");
-          }
-        });
-      });
+</script>
 
-    </script>
+
+
+
   </body>
 </html>
