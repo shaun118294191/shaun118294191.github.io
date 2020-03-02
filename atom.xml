@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-01T06:32:29.313Z</updated>
+    <updated>2020-03-02T02:48:59.685Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,114 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[T122393 À la Volonté du Peuple]]></title>
+        <id>https://shaun118294191.github.io/post/t122393-a-la-volonte-du-peuple/</id>
+        <link href="https://shaun118294191.github.io/post/t122393-a-la-volonte-du-peuple/">
+        </link>
+        <updated>2020-03-02T02:32:08.000Z</updated>
+        <content type="html"><![CDATA[<p>题目描述：<br>
+A solitary spark can start a prairie fire.</p>
+<p>You are given a weighted connected undirected graph with nn vertices and mm edges. You know that someone light up a fire at vertex 1, which will burn the current position into dust immediately and expand to adjacent places at the speed 1 mile per second. The fire will split at the vertices to all those edges who have not been lighten up, and will cause a blast when at least two fires meet at the same point.</p>
+<p>Revolutionaries love explosions. They want you to count the number of explosions that will happen on the graph.</p>
+<p>It's guaranteed that the graph is connected.<br>
+<img src="https://shaun118294191.github.io/post-images/1583116803542.png" alt="" loading="lazy"></p>
+<p>The graph may contain self loops and multiple edges. Example 1shows the method to deal with them.</p>
+<p>The size of input file may be large. Please, do not read input by too slow ways.<br>
+INPUT:<br>
+2 3<br>
+1 1 1<br>
+1 2 1<br>
+1 2 1<br>
+OUTPUT:<br>
+2</p>
+<p>INPUT:<br>
+4 5<br>
+1 2 1<br>
+1 3 1<br>
+2 3 1<br>
+2 4 1<br>
+3 4 1<br>
+OUTPUT:<br>
+2<br>
+<img src="https://shaun118294191.github.io/post-images/1583116672068.png" alt="" loading="lazy"></p>
+<p>先求出最短路，如果一个点的最短路前驱 &gt;= 2，则该点能产生blast；对于不在最短路上的边，若<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">∣</mi><mo>(</mo><mi>d</mi><mi>i</mi><mi>s</mi><mo>[</mo><mi>i</mi><mo>]</mo><mo>−</mo><mi>d</mi><mi>i</mi><mi>s</mi><mo>[</mo><mi>j</mi><mo>]</mo><mo>)</mo><mi mathvariant="normal">∣</mi><mo>&lt;</mo><mi>w</mi></mrow><annotation encoding="application/x-tex">|(dis[i] - dis[j])| &lt; w</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">∣</span><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault">i</span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">i</span><span class="mord mathdefault">s</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span><span class="mclose">]</span><span class="mclose">)</span><span class="mord">∣</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&lt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.02691em;">w</span></span></span></span>则也会产生blast(注意反边不要再加)。</p>
+<pre><code class="language-cpp">for (int cur = 2; cur &lt;= n; cur++) {
+	int cnt = 0;
+	for(int i = head[cur]; ~i; i = Edge[i].next) {
+		int to = Edge[i].to, w = Edge[i].w;
+		if (dis[cur] == dis[to] + w) cnt++;
+		else if (cur &gt;= to &amp;&amp; abs(dis[to] - dis[cur]) &lt; w) sum++;
+	}
+    if (cnt &gt; 1) sum++;
+}
+</code></pre>
+<p>Code:</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+#define int long long 
+#define pii pair&lt;int, int&gt; 
+constexpr int MAXN = 5e5 + 5;
+using namespace std;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0; 
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+struct node {
+	int to, w, next;
+	node(){}
+	node(int _to, int _w, int _next) : to(_to), w(_w), next(_next) {}
+}Edge[MAXN &lt;&lt; 3];
+int head[MAXN], tot, n, m, sum, cnt[MAXN], vis[MAXN], dis[MAXN], depth[MAXN];
+int u[MAXN], v[MAXN], w[MAXN];
+inline void add (int from, int to, int w) {
+	Edge[tot] = node(to, w, head[from]), head[from] = tot++;
+	Edge[tot] = node(from, w, head[to]), head[to] = tot++;
+}
+inline void dijkstra(){
+	memset(dis, 0x3f, sizeof(dis)), cnt[1] = 0;
+    priority_queue&lt; pii , vector&lt;pii&gt; , greater&lt;pii&gt; &gt; q;
+    q.push({dis[1] = 0, 1});
+    while(!q.empty()){
+        int cur = q.top().second;
+        q.pop();
+        if(vis[cur]) continue;
+        for(int i = head[cur]; ~i; i = Edge[i].next){
+            int go = Edge[i].to, w = Edge[i].w;
+            if(dis[go] &gt; dis[cur] + w){
+                dis[go] = dis[cur] + w;
+                q.push({dis[go], go});
+            } 
+        } 
+        vis[cur] = 1;
+    }
+}
+signed main(){
+	read(n), read(m);
+	memset(head, -1, sizeof(head));
+	for (int i = 1; i &lt;= m; i++) {
+		read(u[i]), read(v[i]), read(w[i]);
+		if (u[i] == v[i]) sum++;
+		else add(u[i], v[i], w[i]);
+	}
+	dijkstra();
+	for (int cur = 2; cur &lt;= n; cur++) {
+		int cnt = 0;
+		for(int i = head[cur]; ~i; i = Edge[i].next) {
+			int to = Edge[i].to, w = Edge[i].w;
+			if (dis[cur] == dis[to] + w) cnt++;
+			else if (cur &gt;= to &amp;&amp; abs(dis[to] - dis[cur]) &lt; w) sum++;
+		}
+		if (cnt &gt; 1) sum++;
+	}
+	cout &lt;&lt; sum &lt;&lt; endl;
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[P3605 [USACO17JAN]Promotion Counting P]]></title>
         <id>https://shaun118294191.github.io/post/p3605-usaco17janpromotion-counting-p/</id>
