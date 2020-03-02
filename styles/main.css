@@ -976,7 +976,7 @@ td {
 }
 
       .main {
-        max-width: 1000px;
+        max-width: 1100px;
       }
     
       .post-detail .post .post-content p {
@@ -998,14 +998,6 @@ td {
     
       body {
         font-family: -apple-system,BlinkMacSystemFont,'Helvetica Neue','PingFang SC','Hiragino Sans GB','Droid Sans Fallback','Microsoft YaHei',sans-serif;
-      }
-    
-      .main {
-        background: #fff9db;
-      }
-    
-      body {
-        background: #fff9db;
       }
     
       body {
