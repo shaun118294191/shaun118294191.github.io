@@ -1,0 +1,251 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CF813E Army Creation | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583242978128">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="CF813E Army Creation | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+方法和SP3267 DQUERY - D-query类似，本题更具一般性。
+
+
+可以求出每个数前面第kkk个数的位置(不足kkk个设为0)。
+for (int i = 1, x; i &lt;= n; i++) {
+    x =..." />
+    <meta name="keywords" content="可持久化线段树" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583242978128" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CF813E Army Creation
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-03
+              </span>
+              <span>
+                3 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/fg5uGqC1T/" class="post-tag">
+                  # 可持久化线段树
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/CF813E">题目链接</a><br>
+方法和<a href="https://www.luogu.com.cn/blog/user48611/sp3267-dquery-d-query">SP3267 DQUERY - D-query</a>类似，本题更具一般性。</p>
+<ul>
+<li>
+<p>可以求出每个数前面第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数的位置(不足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个设为0)。</p>
+<pre><code class="language-cpp">for (int i = 1, x; i &lt;= n; i++) {
+    x = read(), pos[x].push_back(i);
+    int sz = pos[x].size();
+    if (sz &gt; k) sz = pos[x][sz - k - 1]; else sz = 0;
+    modify(root[i - 1], newNode(root[i]), 0, n, sz);
+}
+</code></pre>
+</li>
+<li>
+<p>询问即求有多少个数，其前面第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数的位置小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e5 + 5;
+constexpr int LOG = 20;
+using namespace std;
+inline int read(){
+    int x = 0, f = 1;
+    char ch = getchar();
+    while(!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while(isdigit(ch)) x = (x &lt;&lt; 3) + (x &lt;&lt; 1) + ch -48, ch = getchar();
+    return x * f;
+}
+struct Node {
+	Node * lson, *rson;
+	int cnt;
+}Tree[MAXN * LOG], *root[MAXN];
+int tot, n, m, k, last;
+inline Node * newNode(Node * &amp;root) { return root = &amp;Tree[tot++];}
+inline void build(int L, int R, Node *root) {
+	if (L == R) return;
+	int mid = (L + R) &gt;&gt; 1;
+	build(L, mid, newNode(root-&gt;lson)), build(mid + 1, R, newNode(root-&gt;rson));
+}
+inline void modify(Node *pre, Node *cur, int L, int R, int pos) {
+	*cur = *pre;
+	if (L == R) {
+		cur-&gt;cnt++;
+		return;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	if (pos &lt;= mid) modify(pre-&gt;lson, newNode(cur-&gt;lson), L, mid, pos);
+	else modify(pre-&gt;rson, newNode(cur-&gt;rson), mid + 1, R, pos);
+	cur-&gt;cnt = cur-&gt;lson-&gt;cnt + cur-&gt;rson-&gt;cnt;
+}
+inline int query(Node * pre, Node * cur, int L, int R, int qL, int qR) {
+	if (qL &lt;= L &amp;&amp; R &lt;= qR) return cur-&gt;cnt - pre-&gt;cnt;
+	int mid = (L + R ) &gt;&gt; 1, ans = 0;
+	if (qL &lt;= mid) ans += query(pre-&gt;lson, cur-&gt;lson, L, mid, qL, qR);
+	if (qR &gt; mid) ans += query(pre-&gt;rson, cur-&gt;rson, mid + 1, R, qL, qR);
+	return ans;
+}
+vector&lt;int&gt;pos[MAXN];
+int main(){
+	n = read(), k = read();
+	build(0, n, newNode(root[0]));
+	for (int i = 1, x; i &lt;= n; i++) {
+		x = read(), pos[x].push_back(i);
+        int sz = pos[x].size();
+        if (sz &gt; k) sz = pos[x][sz - k - 1]; else sz = 0;
+        modify(root[i - 1], newNode(root[i]), 0, n, sz);
+    }
+	m = read();
+	while (m--) {
+		int l = read(), r = read();
+        l = (l + last) % n + 1, r = (r + last) % n + 1;
+        if (l &gt; r) swap(l, r);
+		printf(&quot;%d\n&quot;, last = query(root[l - 1], root[r], 0, n, 0, l - 1));
+	}
+	return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/p3258-jloi2014song-shu-de-xin-jia/">
+              <h3 class="post-title">
+                P3258 [JLOI2014]松鼠的新家
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

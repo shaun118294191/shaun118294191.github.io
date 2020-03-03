@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-03T13:38:31.640Z</updated>
+    <updated>2020-03-03T13:44:21.773Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[CF813E Army Creation]]></title>
+        <id>https://shaun118294191.github.io/post/cf813e-army-creation/</id>
+        <link href="https://shaun118294191.github.io/post/cf813e-army-creation/">
+        </link>
+        <updated>2020-03-03T13:41:53.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/CF813E">题目链接</a><br>
+方法和<a href="https://www.luogu.com.cn/blog/user48611/sp3267-dquery-d-query">SP3267 DQUERY - D-query</a>类似，本题更具一般性。</p>
+<ul>
+<li>
+<p>可以求出每个数前面第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数的位置(不足<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个设为0)。</p>
+<pre><code class="language-cpp">for (int i = 1, x; i &lt;= n; i++) {
+    x = read(), pos[x].push_back(i);
+    int sz = pos[x].size();
+    if (sz &gt; k) sz = pos[x][sz - k - 1]; else sz = 0;
+    modify(root[i - 1], newNode(root[i]), 0, n, sz);
+}
+</code></pre>
+</li>
+<li>
+<p>询问即求有多少个数，其前面第<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>个数的位置小于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>。</p>
+</li>
+</ul>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e5 + 5;
+constexpr int LOG = 20;
+using namespace std;
+inline int read(){
+    int x = 0, f = 1;
+    char ch = getchar();
+    while(!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while(isdigit(ch)) x = (x &lt;&lt; 3) + (x &lt;&lt; 1) + ch -48, ch = getchar();
+    return x * f;
+}
+struct Node {
+	Node * lson, *rson;
+	int cnt;
+}Tree[MAXN * LOG], *root[MAXN];
+int tot, n, m, k, last;
+inline Node * newNode(Node * &amp;root) { return root = &amp;Tree[tot++];}
+inline void build(int L, int R, Node *root) {
+	if (L == R) return;
+	int mid = (L + R) &gt;&gt; 1;
+	build(L, mid, newNode(root-&gt;lson)), build(mid + 1, R, newNode(root-&gt;rson));
+}
+inline void modify(Node *pre, Node *cur, int L, int R, int pos) {
+	*cur = *pre;
+	if (L == R) {
+		cur-&gt;cnt++;
+		return;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	if (pos &lt;= mid) modify(pre-&gt;lson, newNode(cur-&gt;lson), L, mid, pos);
+	else modify(pre-&gt;rson, newNode(cur-&gt;rson), mid + 1, R, pos);
+	cur-&gt;cnt = cur-&gt;lson-&gt;cnt + cur-&gt;rson-&gt;cnt;
+}
+inline int query(Node * pre, Node * cur, int L, int R, int qL, int qR) {
+	if (qL &lt;= L &amp;&amp; R &lt;= qR) return cur-&gt;cnt - pre-&gt;cnt;
+	int mid = (L + R ) &gt;&gt; 1, ans = 0;
+	if (qL &lt;= mid) ans += query(pre-&gt;lson, cur-&gt;lson, L, mid, qL, qR);
+	if (qR &gt; mid) ans += query(pre-&gt;rson, cur-&gt;rson, mid + 1, R, qL, qR);
+	return ans;
+}
+vector&lt;int&gt;pos[MAXN];
+int main(){
+	n = read(), k = read();
+	build(0, n, newNode(root[0]));
+	for (int i = 1, x; i &lt;= n; i++) {
+		x = read(), pos[x].push_back(i);
+        int sz = pos[x].size();
+        if (sz &gt; k) sz = pos[x][sz - k - 1]; else sz = 0;
+        modify(root[i - 1], newNode(root[i]), 0, n, sz);
+    }
+	m = read();
+	while (m--) {
+		int l = read(), r = read();
+        l = (l + last) % n + 1, r = (r + last) % n + 1;
+        if (l &gt; r) swap(l, r);
+		printf(&quot;%d\n&quot;, last = query(root[l - 1], root[r], 0, n, 0, l - 1));
+	}
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[P3258 [JLOI2014]松鼠的新家]]></title>
         <id>https://shaun118294191.github.io/post/p3258-jloi2014song-shu-de-xin-jia/</id>
@@ -816,38 +901,6 @@ int main(){
 	return 0;
 }
 </code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://shaun118294191.github.io/post/hello-gridea/</id>
-        <link href="https://shaun118294191.github.io/post/hello-gridea/">
-        </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
 ]]></content>
     </entry>
 </feed>
