@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-04T00:39:02.930Z</updated>
+    <updated>2020-03-04T00:49:45.443Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -30,6 +30,9 @@
 	return;
 	}
 	if (root-&gt;key &lt;= key) L = root, split(Rson, Rson, R, key); //左子树key一定都小于key, 再分裂root右子树给L右子树与R
+    /*  int Lsize = Lson ? Lson-&gt;size : 0; 
+        if (Lsize + 1 &lt;= size) L = root, split(Rson, Rson, R, size - Lsize - 1;
+    */
 	else R = root, split(Lson, L, Lson, key); 
 	update(root);//更新
 }
