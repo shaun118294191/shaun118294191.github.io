@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hazardous(map) | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583409154009">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583409580166">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="Hazardous(map) | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
@@ -12,10 +12,8 @@
 
 
     <meta name="description" content="给定n个节点，每个节点有一种颜色。对于每个节i, 求i的子树中所有颜色相同的节点两两距离和。
-Map合并:
-#include &lt;bits/stdc++.h&gt;
-using namespace std;
-typedef long l..." />
+采用支持合并的数据结构，下标维护标号，信息维护深度总和与点数，在每个点合并子树信息并维护
+答案。合并的两端的某个颜色的信息分别为 (dep1, c..." />
     <meta name="keywords" content="map合并" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -25,7 +23,7 @@ typedef long l..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583409154009" alt="">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583409580166" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -85,7 +83,7 @@ typedef long l..." />
                 2020-03-05
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
                 <a href="https://shaun118294191.github.io/tag/eJGnaCG8L/" class="post-tag">
@@ -97,6 +95,8 @@ typedef long l..." />
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p>给定n个节点，每个节点有一种颜色。对于每个节i, 求i的子树中所有颜色相同的节点两两距离和。</p>
+<p>采用支持合并的数据结构，下标维护标号，信息维护深度总和与点数，在每个点合并子树信息并维护<br>
+答案。合并的两端的某个颜色的信息分别为 (dep1, cnt1),(dep2, cnt2)，当前点深度为 d，则合并时产生贡献dep1 × cnt2 + dep2 × cnt11- 2d × cnt1 × cnt2（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Σ</mi><mrow><mo>(</mo><mi>d</mi><mn>1</mn><mo>−</mo><mi>d</mi><mo>)</mo></mrow><mo>∗</mo><mi>c</mi><mi>n</mi><mi>t</mi><mn>2</mn><mo>+</mo><mi mathvariant="normal">Σ</mi><mrow><mo>(</mo><mi>d</mi><mn>2</mn><mo>−</mo><mi>d</mi><mo>)</mo></mrow><mo>∗</mo><mi>c</mi><mi>n</mi><mi>t</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">\Sigma{(d1 - d)} * cnt2+ \Sigma{(d2 - d)}  * cnt1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Σ</span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Σ</span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">1</span></span></span></span>)。</p>
 <p>Map合并:</p>
 <pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 using namespace std;
