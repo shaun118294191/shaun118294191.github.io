@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-04T10:26:49.133Z</updated>
+    <updated>2020-03-05T11:32:57.149Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,78 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[P1944 最长括号匹配]]></title>
+        <id>https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/</id>
+        <link href="https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/">
+        </link>
+        <updated>2020-03-05T11:21:27.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P1944">题目链接</a></p>
+<p>求最长括号序列, 若有相同长度的括号序列，则输出最靠前的。</p>
+<p>合法括号序列: [], (), [()], [()], <a href="">()()</a>[]</p>
+<ul>
+<li>用栈来维护下标, 用C[i]表示i处最长括号序列长度。</li>
+<li>读入'(' 或 '['就压入栈, 否则判断当前字符是否与栈顶元素匹配。</li>
+<li>如果匹配，则有C[i] = i - Stack[top] + 1 + C[Stack[top] - 1]，并弹出栈顶元素。示例 <a href="">()</a></li>
+<li>若不匹配，则清空栈。示例[)]，不清空则会出错。</li>
+</ul>
+<pre><code class="language-cpp">    for (int i = 1; i &lt; s.size(); i++) {
+        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
+        else if (top) {
+            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
+                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
+                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
+                maxL = max(maxL, C[i]);
+                top--;
+            } else while(top) top--;
+        }
+    }
+</code></pre>
+<p>最后遍历字符串找到第一个C[i] = maxLen的位置，输出即可。</p>
+<p>Code:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e6 + 6;
+constexpr int MAXM = 1e4 + 4;
+using namespace std;
+template &lt;typename T&gt;
+
+inline void read(T &amp;x) {
+    int f = 1;
+    x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+
+string s, cur, ans;
+int Stack[MAXN], top, C[MAXN], maxL(-1);
+
+int main() {
+    std::ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+    cin &gt;&gt; s, s = &quot; &quot; + s;
+    for (int i = 1; i &lt; s.size(); i++) {
+        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
+        else if (top) {
+            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
+                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
+                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
+                maxL = max(maxL, C[i]);
+                top--;
+            } else while(top) top--;
+        }
+    }
+    for (int i = 1; i &lt; s.size(); i++) {
+        if (C[i] == maxL) {
+            for (int j = i - maxL + 1; j &lt;= i; j++)cout &lt;&lt; s[j];
+            return 0;
+        }
+    }
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[文艺平衡树]]></title>
         <id>https://shaun118294191.github.io/post/wen-yi-ping-heng-shu/</id>
@@ -1018,76 +1090,6 @@ int main(){
 	cout &lt;&lt; sum &lt;&lt; endl &lt;&lt; q.top().h &lt;&lt; endl; 
 	return 0;
 }
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[P3128 [USACO15DEC]Max Flow P]]></title>
-        <id>https://shaun118294191.github.io/post/p3128-usaco15decmax-flow-p/</id>
-        <link href="https://shaun118294191.github.io/post/p3128-usaco15decmax-flow-p/">
-        </link>
-        <updated>2020-03-01T05:00:22.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P3128">题目链接</a></p>
-<p>Fj有<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.03148em;">k</span></span></span></span>条运输奶牛的路线，第i条路线从隔间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>s</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">s_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>到<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>t</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">t_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>, 一条运输路线会给它的两个端点处的隔间以及中间途径的所有隔间带来一个单位的运输压力，你需要计算压力最大的隔间的压力是多少。</p>
-<p>树上差分点修改模板题，将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>e</mi><mi>l</mi><mi>t</mi><mi>a</mi><mo>[</mo><msub><mi>s</mi><mi>i</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">delta[s_i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">s</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>e</mi><mi>l</mi><mi>t</mi><mi>a</mi><mo>[</mo><msub><mi>t</mi><mi>i</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">delta[t_i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault">t</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span> 加1; 将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>e</mi><mi>l</mi><mi>t</mi><mi>a</mi><mo>[</mo><mi>l</mi><mi>c</mi><mi>a</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">delta[lca]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">c</span><span class="mord mathdefault">a</span><span class="mclose">]</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>d</mi><mi>e</mi><mi>l</mi><mi>t</mi><mi>a</mi><mo>[</mo><msub><mi>f</mi><mrow><mi>l</mi><mi>c</mi><mi>a</mi></mrow></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">delta[f_{lca}]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">d</span><span class="mord mathdefault">e</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">t</span><span class="mord mathdefault">a</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.33610799999999996em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">a</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span> 减1。</p>
-<p>最后dfs求子树delta和即可。</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-#define pii pair&lt;int, int&gt; 
-constexpr int MAXN = 5e4 + 4;
-constexpr int LOG = 17;
-using namespace std;
-template &lt;typename T&gt; inline void read(T &amp;x) {
-    int f = 1; x = 0; 
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-int n, m, f[MAXN][LOG], depth[MAXN], delta[MAXN], ans;
-vector&lt;int&gt; G[MAXN];
-inline void dfs(int cur, int fa) {
-	depth[cur] = depth[fa] + 1, f[cur][0] = fa;
-	for (int i = 1; i &lt; LOG; i++) f[cur][i] = f[f[cur][i - 1]][i - 1];
-	for (auto to : G[cur]) {
-		if (fa == to) continue;
-		dfs(to, cur);
-	}
-}
-inline int LCA(int u, int v) {
-	if (depth[u] &lt; depth[v]) swap(u, v);
-	for (int i = LOG - 1; i &gt;= 0; i--) 
-		if (depth[f[u][i]] &gt;= depth[v])
-			u = f[u][i];
-	if (u == v) return u;
-	for (int i = LOG - 1; i &gt;= 0; i--) 
-		if (f[u][i] != f[v][i])
-			u = f[u][i], v = f[v][i];
-	return f[u][0];
-}
-inline int dfs2(int cur, int fa) {
-	int cnt = 0;
-	for (auto to : G[cur]) {
-		if (to == fa) continue;
-		cnt += dfs2(to, cur);
-	}
-	ans = max(ans, cnt + delta[cur]);
-	return cnt + delta[cur];
-}
-int main(){
-	std::ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-	cin &gt;&gt; n &gt;&gt; m;
-	for (int i = 1, u, v; i &lt; n; i++) 
-		cin &gt;&gt; u &gt;&gt; v, G[u].emplace_back(v), G[v].emplace_back(u);
-	dfs(1, 0);
-	for (int i = 1, u, v, lca; i &lt;= m; i++) {
-		cin &gt;&gt; u &gt;&gt; v, lca = LCA(u, v);
-		delta[u]++, delta[v]++, delta[lca]--, delta[f[lca][0]]--;
-	}
-	ans = max(ans, dfs2(1, 0));
-	cout &lt;&lt; ans &lt;&lt; endl;
-	return 0;
-}
-
 </code></pre>
 ]]></content>
     </entry>
