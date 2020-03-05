@@ -2,24 +2,21 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Hello Gridea | Shaun</title>
+<title>Hazardous(map) | Shaun</title>
 <link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583409154009">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hello Gridea | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Hazardous(map) | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="👏  欢迎使用 Gridea ！
-✍️  Gridea 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...
-
-Github
-Gridea 主页
-示例网站
-特性👇
-📝  你可以使用最酷的 Markdo..." />
-    <meta name="keywords" content="Gridea" />
+    <meta name="description" content="给定n个节点，每个节点有一种颜色。对于每个节i, 求i的子树中所有颜色相同的节点两两距离和。
+Map合并:
+#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long l..." />
+    <meta name="keywords" content="map合并" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -81,63 +78,107 @@ Gridea 主页
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              Hello Gridea
+              Hazardous(map)
             </h2>
             <div class="post-info">
               <span>
-                2018-12-12
+                2020-03-05
               </span>
               <span>
                 2 min read
               </span>
               
-                <a href="https://shaun118294191.github.io/tag/ONDzBoJLC/" class="post-tag">
-                  # Gridea
+                <a href="https://shaun118294191.github.io/tag/eJGnaCG8L/" class="post-tag">
+                  # map合并
                 </a>
               
             </div>
             
-              <img class="post-feature-image" src="https://shaun118294191.github.io/post-images/hello-gridea.png" alt="">
-            
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-<!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+                <p>给定n个节点，每个节点有一种颜色。对于每个节i, 求i的子树中所有颜色相同的节点两两距离和。</p>
+<p>Map合并:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+typedef long long LL;
+typedef pair&lt;int, int&gt; pii;
+
+#define N 101111
+
+int n;
+int color[N], dep[N];
+
+typedef map &lt;int, pair&lt;long long, int&gt;&gt; Map;
+Map root[N];
+vector &lt;int&gt; G[N];
+LL sc[N], delta;
+int curdep;
+
+void merge(Map &amp;root, Map &amp;p) {
+	if (root.size() &lt; p.size()) swap(root, p);
+	for (auto&amp; v : p) {
+		int color = v.first;
+		auto it = root.find(color);
+		if (it != root.end()) {
+			LL d1 = it-&gt;second.first, c1 = it-&gt;second.second;
+			LL d2 = v.second.first, c2 = v.second.second;
+			delta += d1 * c2 + d2 * c1 - 2ll * curdep * c1 * c2;
+			it-&gt;second.first += d2;
+			it-&gt;second.second += int(c2);
+		}
+		else root.insert(v);
+	}
+}
+
+void init(Map&amp; root, int color) {
+	root[color] = {curdep, 1};
+}
+
+void dfs(int x, int fa) {
+	curdep = dep[x];
+	init(root[x], color[x]);
+	for (auto to : G[x]) if (to != fa){
+		dep[to] = dep[x] + 1;
+		dfs(to, x);
+		sc[x] += sc[to];
+		delta = 0;
+		curdep = dep[x];
+		merge(root[x], root[to]);
+		sc[x] += delta;
+	}
+}
+
+int main() {
+	scanf(&quot;%d&quot;, &amp;n);
+	for (int i = 1; i &lt;= n; i++) scanf(&quot;%d&quot;, color + i);
+	for (int i = 1; i &lt; n; i++) {
+		int u, v;
+		scanf(&quot;%d%d&quot;, &amp;u, &amp;v);
+		G[u].push_back(v);
+		G[v].push_back(u);
+	}
+	dfs(1, -1);
+	for (int i = 1; i &lt;= n; i++) printf(&quot;%lld &quot;, sc[i]);
+}
+</code></pre>
 
               </div>
               <div class="toc-container">
-                <ul class="markdownIt-TOC">
-<li>
-<ul>
-<li><a href="#%E7%89%B9%E6%80%A7">特性👇</a></li>
-</ul>
-</li>
-</ul>
-
+                
               </div>
             </div>
           </article>
         </div>
 
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/hazardous/">
+              <h3 class="post-title">
+                Hazardous
+              </h3>
+            </a>
+          </div>
         
 
         

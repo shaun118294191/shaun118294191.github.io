@@ -2,20 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>P3605 [USACO17JAN]Promotion Counting P | Shaun</title>
+<title>Hazardous | Shaun</title>
 <link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583409154009">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="P3605 [USACO17JAN]Promotion Counting P | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Hazardous | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="题目链接
-一颗n个节点的树，每个节点有一个点权值。求节点iii的子树中比其权值大的节点的个数。
-离散化后对于每个点建立一个动态开点的权值线段树，记录cnt。
-inline Node * newNode(Node * &amp;root) {..." />
-    <meta name="keywords" content="线段树,线段树合并" />
+    <meta name="description" content="Viruses are hazardous. Controlling viruses is hard.
+In order to prepare for potential virus incoming, Country H need to ..." />
+    <meta name="keywords" content="线段树合并" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -77,19 +75,15 @@ inline Node * newNode(Node * &amp;root) {..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              P3605 [USACO17JAN]Promotion Counting P
+              Hazardous
             </h2>
             <div class="post-info">
               <span>
-                2020-03-01
+                2020-03-05
               </span>
               <span>
-                4 min read
+                5 min read
               </span>
-              
-                <a href="https://shaun118294191.github.io/tag/3SB5eV6YL/" class="post-tag">
-                  # 线段树
-                </a>
               
                 <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="post-tag">
                   # 线段树合并
@@ -99,39 +93,35 @@ inline Node * newNode(Node * &amp;root) {..." />
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><a href="https://www.luogu.com.cn/problem/P3605">题目链接</a></p>
-<p>一颗n个节点的树，每个节点有一个点权值。求节点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi></mrow><annotation encoding="application/x-tex">i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.65952em;vertical-align:0em;"></span><span class="mord mathdefault">i</span></span></span></span>的子树中比其权值大的节点的个数。</p>
-<p>离散化后对于每个点建立一个动态开点的权值线段树，记录cnt。</p>
-<pre><code class="language-cpp">inline Node * newNode(Node * &amp;root) { 
-	if (root == NULL) root = &amp;Tree[++tot];
-	return root;
-}
-for (int i = 1; i &lt;= n; i++) 
-		newNode(root[i]), insert(root[i], 1, cnt, Map[val[i]]);
-inline void insert(Node *root, int L, int R, int val) {
-	if (L == R) {
-		root-&gt;cnt++;
-		return;
-	}
-	int mid = (L + R) &gt;&gt; 1;
-	if (val &lt;= mid) insert(newNode(Lson), L, mid, val);
-	else insert(newNode(Rson), mid + 1, R, val);
-	update(root);
-}
-</code></pre>
-<p>dfs时自底向上合并查询：</p>
-<pre><code class="language-cpp">inline void dfs(int cur) {
-	for (auto to : G[cur]) {
-		dfs(to);
-		merge(root[cur], root[to], 1, cnt);
-	}
-	ans[cur] = query(root[cur], 1, cnt, Map[val[cur]] + 1, cnt);
-}
-</code></pre>
-<p>Code:</p>
+                <p>Viruses are hazardous. Controlling viruses is hard.</p>
+<p>In order to prepare for potential virus incoming, Country H need to investigate the hazard score for every administrative division. Abstractly Country H's hierarchy forms a rooted tree that every vertex is a level<br>
+of administration - like province, city, county, town, etc. The root is vertex 1. Every vertex has its color which indicates the living habits of local residents - people are more likely to transport between vertices of the same color.</p>
+<p>The hazard score for every vertex is calculated as the sum of distance of all pairs of different vertices in the subtree of the vertex that have the same color. The distance between two vertices is calculated as the minimum number of edges it need to transport between two vertices.</p>
+<p>Time is life. You are hired to calculate the hazard score for every vectex in Country H as fast as possible.</p>
+<p>Input<br>
+The first line contains a integer n(1 ≤ n ≤ 100000) - the number of vertices.<br>
+The second line contains n integers, the i-th number ci(1 ≤ ci ≤ n) denotes the color of vertex i.<br>
+Each of the next n 1 lines contains 2 integers ui, vi(1 ≤ ui, vi ≤ n) - the ends of the i-th edge.<br>
+It's guaranteed that the edges forms a tree containing n vertices.</p>
+<p>Output<br>
+Output n lines, on the i-th line print a single integer denoting the hazard score for subtree i。</p>
+<p>给定n个节点，每个节点有一种颜色。对于每个节i, 求i的子树中所有颜色相同的节点两两距离和。</p>
+<p>INPUT<br>
+5<br>
+1 2 1 1 2<br>
+1 2<br>
+2 3<br>
+2 4<br>
+5 1<br>
+OUTPUT<br>
+8 2 0 0 0<br>
+<img src="https://shaun118294191.github.io/post-images/1583408451493.png" alt="" loading="lazy"></p>
+<p>采用支持合并的数据结构，下标维护标号，信息维护深度总和与点数，在每个点合并子树信息并维护<br>
+答案。合并的两端的某个颜色的信息分别为 (dep1, cnt1),(dep2, cnt2)，当前点深度为 d，则合并时产生贡献dep1 × cnt2 + dep2 × cnt11 2d × cnt1 × cnt2。</p>
+<p>线段树合并: delta和curdepth为全局变量，dfs后需重新赋值</p>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-constexpr int MAXN = 1e5 + 1;
-constexpr int LOG = 17;
+constexpr int MAXN = 1e5 + 5;
+constexpr int LOG = 18;
 using namespace std;
 template &lt;typename T&gt; inline void read(T &amp;x) {
     int f = 1; x = 0; 
@@ -142,77 +132,66 @@ template &lt;typename T&gt; inline void read(T &amp;x) {
 }
 struct Node {
 	Node *lson, *rson;
-	int cnt;
+	long long cnt, depth;
 }Tree[MAXN * LOG * 4], *root[MAXN];
 #define Lson root-&gt;lson
 #define Rson root-&gt;rson
 vector&lt;int&gt; G[MAXN];
-int tot, n, ans[MAXN], val[MAXN], cnt, cpy[MAXN];
-unordered_map&lt;int, int&gt; Map;
-inline void discretization() {
-	sort(cpy + 1, cpy + n + 1);
-	cnt = unique(cpy + 1, cpy + n + 1) - cpy - 1;
-	for (int i = 1; i &lt;= cnt; i++) Map[cpy[i]] = i;
-}
+int tot, n, val[MAXN];
+long long delta, curDepth, depth[MAXN], ans[MAXN];
 inline Node * newNode(Node * &amp;root) { 
 	if (root == NULL) root = &amp;Tree[++tot];
 	return root;
 }
-inline void update(Node *root) {
-    int Lcnt = Lson == NULL ? 0 : Lson-&gt;cnt, Rcnt = Rson == NULL ? 0 : Rson-&gt;cnt;
-	root-&gt;cnt = Lcnt + Rcnt;
-}
 inline void insert(Node *root, int L, int R, int val) {
 	if (L == R) {
 		root-&gt;cnt++;
+		root-&gt;depth += curDepth;
 		return;
 	}
 	int mid = (L + R) &gt;&gt; 1;
 	if (val &lt;= mid) insert(newNode(Lson), L, mid, val);
 	else insert(newNode(Rson), mid + 1, R, val);
-	update(root);
 }
 inline void merge(Node *&amp;root, Node *p, int L, int R) {
 	if (root == NULL) {root = p; return;}
 	if (p == NULL) return;
 	if (L == R) {
+		delta += root-&gt;depth * p-&gt;cnt + root-&gt;cnt * p-&gt;depth - 2LL * curDepth * (root-&gt;cnt) * (p-&gt;cnt);
 		root-&gt;cnt += p-&gt;cnt;
+		root-&gt;depth += p-&gt;depth;	
         return;
 	}
 	int mid = (L + R) &gt;&gt; 1;
 	merge(Lson, p-&gt;lson, L, mid);
 	merge(Rson, p-&gt;rson, mid + 1, R);
-	update(root);
 }
-inline int query(Node *root, int L, int R, int qL, int qR) {
-	if (root == NULL) return 0;
-	if (qL &lt;= L &amp;&amp; R &lt;= qR) 
-		return root-&gt;cnt;
-	int mid = (L + R) &gt;&gt; 1, res = 0;
-	if (qL &lt;= mid) res += query(Lson, L, mid, qL, qR);
-	if (qR &gt; mid) res += query(Rson, mid + 1 ,R, qL, qR);
-	return res;
-}
-inline void dfs(int cur) {
+inline void dfs(int cur, int fa) {
+	depth[cur] = depth[fa] + 1;
+	curDepth = depth[cur];
+	insert(root[cur], 1, n, val[cur]);
 	for (auto to : G[cur]) {
-		dfs(to);
-		merge(root[cur], root[to], 1, cnt);
+		if (fa == to) continue;
+		dfs(to, cur);
+		delta = 0, curDepth = depth[cur];
+		merge(root[cur], root[to], 1, n);
+		ans[cur] += ans[to] + delta;
 	}
-	ans[cur] = query(root[cur], 1, cnt, Map[val[cur]] + 1, cnt);
 }
 int main(){
 	read(n);
-	for (int i = 1; i &lt;= n; i++) read(val[i]), cpy[i] = val[i];
-	discretization();
 	for (int i = 1; i &lt;= n; i++) 
-		newNode(root[i]), insert(root[i], 1, cnt, Map[val[i]]);
-	for (int i = 2, fa; i &lt;= n; i++) 
-		cin &gt;&gt; fa, G[fa].emplace_back(i);
-	dfs(1);
-	for (int i = 1; i &lt;= n; i++) printf(&quot;%d\n&quot;, ans[i]);
+		read(val[i]), newNode(root[i]);
+	for (int i = 1, u, v; i &lt; n; i++) {
+		read(u), read(v);
+		G[u].push_back(v), G[v].push_back(u);
+	}
+	dfs(1, 0);
+	for (int i = 1; i &lt;= n; i++) printf(&quot;%lld &quot;, ans[i]);
 	return 0;
 }
 </code></pre>
+<p>Map合并:</p>
 
               </div>
               <div class="toc-container">
@@ -225,9 +204,9 @@ int main(){
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://shaun118294191.github.io/post/p2168-noi2015he-ma-shi-shi/">
+            <a href="https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/">
               <h3 class="post-title">
-                P2168 [NOI2015]荷马史诗
+                P1944 最长括号匹配
               </h3>
             </a>
           </div>
