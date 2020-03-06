@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-06T09:55:04.038Z</updated>
+    <updated>2020-03-06T11:09:03.200Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,113 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[CF609E Minimum spanning tree for each edge]]></title>
+        <id>https://shaun118294191.github.io/post/cf609e-minimum-spanning-tree-for-each-edge/</id>
+        <link href="https://shaun118294191.github.io/post/cf609e-minimum-spanning-tree-for-each-edge/">
+        </link>
+        <updated>2020-03-06T11:00:25.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/CF609E">题目链接</a><br>
+Connected undirected weighted graph without self-loops and multiple edges is given. Graph contains n vertices and m edges.</p>
+<p>For each edge <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span> find the minimal possible weight of the spanning tree that contains the edge <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u,v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span> .</p>
+<p>The weight of the spanning tree is the sum of weights of all edges included in spanning tree.</p>
+<ul>
+<li>
+<p>先求出最小生成树, 记录边长和<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>u</mi><mi>m</mi></mrow><annotation encoding="application/x-tex">sum</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">u</span><span class="mord mathdefault">m</span></span></span></span></p>
+</li>
+<li>
+<p>对于每条边<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>，若在最小生成树上则生成树大小为sum</p>
+</li>
+<li>
+<p>若不在最小生成树上，将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>添加至生成树则形成一个环，删去环上的最大树边,  即得到含<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>的最小生成树。</p>
+</li>
+</ul>
+<p>Code:</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 2e5 + 5;
+constexpr int LOG = 19;
+using namespace std;
+using LL = long long;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0; 
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+int n, m, fa[MAXN], u[MAXN], v[MAXN], w[MAXN];
+LL sum;
+
+inline int find(int x) {
+	return fa[x] == x ? x : fa[x] = find(fa[x]);
+}
+inline void Union(int a, int b) {
+	int r1 = find(a), r2 = find(b);
+	if (r1 != r2) fa[r1] = r2;
+}
+
+vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
+vector&lt; pair&lt;int, pair&lt;int, int&gt; &gt; &gt; E;
+
+inline void kruskal() {
+	sort(E.begin(), E.end());
+	int cnt = 0;
+	for (auto e : E) {
+		int w = e.first, from = e.second.first, to = e.second.second;
+		if (find(from) != find(to)) {
+			Union(from, to);
+			cnt++, sum += w;
+			G[from].emplace_back(make_pair(to, w)), G[to].emplace_back(make_pair(from, w));
+		}
+		if (cnt == n - 1) break;
+	}
+}
+int f[MAXN][LOG], val[MAXN][LOG], depth[MAXN];
+inline void dfs(int cur, int fa, int w) {
+	depth[cur] = depth[fa] + 1;
+	f[cur][0] = fa, val[cur][0] = w;
+	for (int i = 1; i &lt; LOG; i++) 
+		f[cur][i] = f[f[cur][i - 1]][i - 1], 
+		val[cur][i] = max(val[cur][i - 1], val[f[cur][i - 1]][i - 1]);
+	for (auto e : G[cur]) {
+		int to = e.first, w = e.second;
+		if (to == fa) continue;
+		dfs(to, cur, w);
+	}
+}
+inline int LCA(int u, int v, int Max) {
+	if (depth[u] &lt; depth[v]) swap(u, v);
+	for (int i = LOG - 1; i &gt;= 0; i--)
+		if (depth[f[u][i]] &gt;= depth[v]) {
+			Max = max(Max, val[u][i]);
+			u = f[u][i];
+		}
+	if (u == v) return Max;
+	for (int i = LOG - 1; i &gt;= 0; i--) 
+		if (f[u][i] != f[v][i]) {
+			Max = max(Max, max(val[u][i], val[v][i]));
+			u = f[u][i], v = f[v][i];
+		}
+	return max(Max, max(val[u][0], val[v][0]));
+}
+int main(){
+	read(n), read(m);
+	for (int i = 1; i &lt;= n; i++) fa[i] = i;
+	for (int i = 1; i &lt;= m; i++) {
+		read(u[i]), read(v[i]), read(w[i]);
+		E.emplace_back(make_pair(w[i], make_pair(u[i], v[i])));
+	}
+	kruskal();
+	dfs(1, 0, 0);
+	for (int i = 1; i &lt;= m; i++) {
+		int lca = LCA(u[i], v[i], 0);
+		printf(&quot;%lld\n&quot;, sum - lca + w[i]);
+	}
+	return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[P2893 [USACO08FEB]Making the Grade G]]></title>
         <id>https://shaun118294191.github.io/post/p2893-usaco08febmaking-the-grade-g/</id>
@@ -913,142 +1020,6 @@ int main() {
 			break;
 		}
 	}
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[P3369 【模板】普通平衡树(指针)]]></title>
-        <id>https://shaun118294191.github.io/post/p3369-mo-ban-pu-tong-ping-heng-shu-zhi-zhen-shi-xian/</id>
-        <link href="https://shaun118294191.github.io/post/p3369-mo-ban-pu-tong-ping-heng-shu-zhi-zhen-shi-xian/">
-        </link>
-        <updated>2020-03-02T13:37:45.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P3369">题目链接</a><br>
-您需要写一种数据结构，来维护一些数，其中需要提供以下操作：</p>
-<p>1.插入 x 数</p>
-<p>2.删除 x 数(若有多个相同的数，因只删除一个)</p>
-<p>3.查询 x 数的排名(排名定义为比当前数小的数的个数 +1)</p>
-<p>4.查询排名为 x 的数</p>
-<p>5.求 x 的前驱(前驱定义为小于 x，且最大的数)</p>
-<p>6.求 x 的后继(后继定义为大于 x，且最小的数)</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-constexpr int MAXN = 1e5 + 5;
-constexpr int Inf = 0x3f3f3f3f;
-using namespace std;
-template &lt;typename T&gt; inline void read(T &amp;x) {
-    int f = 1; x = 0; 
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-struct Treap {
-	Treap *lson, *rson;
-	int key, priority;
-	int cnt, size;
-}Tree[MAXN &lt;&lt; 1], *rt;
-#define Lson root-&gt;lson
-#define Rson root-&gt;rson
-int tot, Q, type, x;
-inline void newNode(Treap *&amp;root, int key) {
-	root = &amp;Tree[tot++];
-	root-&gt;cnt = root-&gt;size = 1;
-	root-&gt;key = key, root-&gt;priority = rand();
-}
-inline void update(Treap *root) {
-	if (root == NULL) return; //空指针直接return
-	int Lsize = (Lson == NULL) ? 0 : Lson-&gt;size, Rsize = (Rson == NULL) ? 0 : Rson-&gt;size;
-	root-&gt;size = Lsize + Rsize + root-&gt;cnt;
-}
-inline void Lrotate(Treap *&amp;root) { //左旋
-	Treap *R = Rson;
-	Rson = R-&gt;lson, R-&gt;lson = root, root = R;
-	update(root-&gt;lson), update(root);
-}
-inline void Rrotate(Treap *&amp;root) { //右旋
-	Treap *L = Lson;
-	Lson = L-&gt;rson, L-&gt;rson = root, root = L;
-	update(root-&gt;rson), update(root);
-}
-inline int getPre(Treap *root, int key, int pre) {
-	if (root == NULL) return pre;
-	if (key &lt;= root-&gt;key) return getPre(Lson, key, pre);
-	return getPre(Rson, key, max(pre, root-&gt;key));
-}
-inline int getNext(Treap *root, int key, int next) {
-	if (root == NULL) return next;
-	if (key &gt;= root-&gt;key) return getNext(Rson, key, next);
-	return getNext(Lson, key, min(next, root-&gt;key));
-}
-inline int getRank(Treap *root, int key) {
-	if (root == NULL) return 0;
-	int Lsize = Lson == NULL ? 0 : Lson-&gt;size; //左儿子有多少数
-	if (key == root-&gt;key) return Lsize + 1; 
-	if (key &lt; root-&gt;key) return getRank(Lson, key);
-	return getRank(Rson, key) + Lsize + root-&gt;cnt;
-}
-inline int getVal(Treap *root, int rank) {
-	if (root == NULL) return Inf; 
-	int Lsize = Lson == NULL ? 0 : Lson-&gt;size; //左儿子有多少数
-	if (Lsize &gt;= rank) return getVal(Lson, rank); 
-	if (Lsize + root-&gt;cnt &gt;= rank) return root-&gt;key;
-	return getVal(Rson, rank - Lsize - root-&gt;cnt);
-}
-inline void insert(Treap *&amp;root, int key) {
-	if (root == NULL) { //不存在该key 新建节点
-		newNode(root, key);
-		return;
-	}
-	if (key == root-&gt;key) root-&gt;cnt++, update(root); //已存在key cnt++, update
-	else if (key &lt; root-&gt;key) { //搜索左儿子
-		insert(Lson, key);
-		if (root-&gt;priority &lt; Lson-&gt;priority) Rrotate(root);
-	} else {
-		insert(Rson, key); //搜索右儿子
-		if (root-&gt;priority &lt; Rson-&gt;priority) Lrotate(root);
-	}
-	update(root);
-}
-inline void remove(Treap *&amp;root, int key) {
-	if (root == NULL) return;
-	if (key == root-&gt;key) {
-		if (root-&gt;cnt &gt; 1) root-&gt;cnt--; //副本减少1
-		else if (root-&gt;rson == NULL) root = root-&gt;lson; //右儿子为空 该点地址变为左儿子的
-		else if (root-&gt;lson == NULL) root = root-&gt;rson; //左儿子为空 该点地址变为右儿子的
-		else { //根据priority将该节点旋转至根 注意root可能旋为NULL
-			if (Lson-&gt;priority &gt; Rson-&gt;priority) Rrotate(root), remove(Rson, key);
-			else Lrotate(root), remove(Lson, key);
-		}
-	} else key &lt; root-&gt;key ? remove(Lson, key) : remove(Rson, key); //查找左右儿子
-	update(root);
-}
-int main(){
-	srand(time(0));
-	read(Q);
-    while (Q--) {
-        read(type), read(x);
-        switch (type) {
-            case 1:
-                insert(rt, x);
-                break;
-            case 2:
-                remove(rt, x);
-                break;
-            case 3:
-                printf(&quot;%d\n&quot;, getRank(rt, x));
-                break;
-            case 4:
-                printf(&quot;%d\n&quot;, getVal(rt, x));
-                break;
-            case 5:
-                printf(&quot;%d\n&quot;, getPre(rt, x, -Inf));
-                break;
-            case 6:
-                printf(&quot;%d\n&quot;, getNext(rt, x, Inf));
-                break;
-        }
-    }
-	return 0;
 }
 </code></pre>
 ]]></content>
