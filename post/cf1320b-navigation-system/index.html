@@ -1,0 +1,278 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>CF1320B Navigation System | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583760746230">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="CF1320B Navigation System | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+Rebuild 最少：若有多条最短路，让每次导航恰好取和工作路径部分重合或完全重合的最短路。如果当前节点经工作路径到终点的距离大于到该点的最短路，且最短路不和工作路径有交集，一定会 Rebuild，有交集就不 Rebuild; 如..." />
+    <meta name="keywords" content="贪心,最短路" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583760746230" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              CF1320B Navigation System
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-09
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/BTEUxzwfV/" class="post-tag">
+                  # 贪心
+                </a>
+              
+                <a href="https://shaun118294191.github.io/tag/pGIh_ekGW/" class="post-tag">
+                  # 最短路
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/CF1320B">题目链接</a><br>
+Rebuild 最少：若有多条最短路，让每次导航恰好取和工作路径部分重合或完全重合的最短路。如果当前节点经工作路径到终点的距离大于到该点的最短路，且最短路不和工作路径有交集，一定会 Rebuild，有交集就不 Rebuild; 如果工作路径和最短路完全重合，则不会再 Rebuild，beak即可。</p>
+<p>Rebuild 最多：若有多条最短路，让每次导航优尽量取在工作路径外的最短路。 如果当前节点经工作路径到终点的距离大于到该点的最短路，且存在一最短路不和工作路径有交集，一定 Rebuild ; 若当前节点经工作路径到终点的距离等于到该点的最短路，且有多条最短路优先取工作路径以外的, 若仅有一条最短路，即只能取在工作路径上的，则不会再 Rebuild，beak即可。</p>
+<p>预处理：dfs求工作路径上每个点到终点距离，求最短路时顺便记录这条最短路和工作路径是否有交集。</p>
+<p>Code:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+const int maxn = 2e5 + 5;
+int n, m, k, a[maxn], vis[maxn], p[maxn], t, u, v;
+int mi_dis[maxn], chain_dis[maxn];
+bool on_chain[maxn], out_chain[maxn];
+int mi, mx;
+#ifndef onlinejudge
+map&lt;int, int&gt; id;
+#else
+unordered_map&lt;int, int&gt; id;
+#endif
+inline int read() {
+    char ch = getchar();
+    int x = 0, f = 1;
+    while (ch &lt; '0' || ch &gt; '9') f = (ch == '-' ? -1 : 1), ch = getchar();
+    while (ch &gt;= '0' &amp;&amp; ch &lt;= '9')
+        x = (x &lt;&lt; 1) + (x &lt;&lt; 3) + ch - 48, ch = getchar();
+    return x * f;
+}
+struct edge {
+    int nxt, to;
+    int mi_dis;
+} e[maxn * 2];
+void add(int from, int to, int dis) {
+    e[t].to = to, e[t].mi_dis = dis, e[t].nxt = p[from], p[from] = t++;
+}
+void spfa(int st) {
+    for (int i = 1; i &lt;= n; i++) mi_dis[i] = 1e9;
+    deque&lt;int&gt; q;
+    q.push_back(st), vis[st] = 1, mi_dis[st] = 0;
+    while (!q.empty()) {
+        int now = q.front();
+        q.pop_front(), vis[now] = 0;
+        for (int i = p[now]; i != -1; i = e[i].nxt) {
+            int to = e[i].to;
+            if (mi_dis[to] &gt; mi_dis[now] + e[i].mi_dis) {
+                out_chain[to] = 0, on_chain[to] = 0;
+                mi_dis[to] = mi_dis[now] + e[i].mi_dis;
+                if (id[to]) {
+                    if (id[now] &amp;&amp; id[now] - 1 == id[to])
+                        on_chain[to] = 1;
+                    else
+                        out_chain[to] = 1;
+                }
+                if (!vis[to]) {
+                    if (q.empty() || mi_dis[to] &gt; mi_dis[q.front()])
+                        q.push_back(to);
+                    else
+                        q.push_front(to);
+                    vis[to] = 1;
+                }
+            } else if (mi_dis[to] == mi_dis[now] + e[i].mi_dis) {
+                if (id[to]) {
+                    if (id[now] &amp;&amp; id[now] - 1 == id[to])
+                        on_chain[to] = 1;
+                    else
+                        out_chain[to] = 1;
+                }
+            }
+        }
+    }
+}
+void dfs(int now, int x, int d) {
+    chain_dis[now] = d;
+    if (x == 0) return;
+    for (int i = p[now]; i + 1; i = e[i].nxt) {
+        int to = e[i].to;
+        if (to == a[x]) dfs(to, x - 1, d + e[i].mi_dis);
+    }
+}
+int main() {
+    memset(p, -1, sizeof(p));
+    n = read(), m = read();
+    for (int i = 1; i &lt;= m; i++) {
+        u = read(), v = read();
+        add(v, u, 1);
+    }
+    k = read();
+    for (int i = 1; i &lt;= k; i++) a[i] = read(), id[a[i]] = i;
+    spfa(a[k]);
+    dfs(a[k], k - 1, 0);
+    int mi = 0, mx = 0;
+    for (int i = 1; i &lt;= k - 1; i++) {
+        if (chain_dis[a[i]] &gt; mi_dis[a[i]]) {
+            if (!on_chain[a[i]]) mi++;
+        } else break;
+    }
+    for (int i = 1; i &lt;= k - 1; i++) {
+        if (chain_dis[a[i]] &gt; mi_dis[a[i]]) {
+            if (out_chain[a[i]]) mx++;
+        } else {
+            if (out_chain[a[i]]) mx++;
+            if (!out_chain[a[i]]) break;
+        }
+    }
+    cout &lt;&lt; mi &lt;&lt; &quot; &quot; &lt;&lt; mx;
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/noi2004yu-men-de-chu-na-yuan/">
+              <h3 class="post-title">
+                [NOI2004]郁闷的出纳员
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
