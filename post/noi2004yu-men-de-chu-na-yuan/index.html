@@ -1,0 +1,308 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>[NOI2004]郁闷的出纳员 | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583760426654">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="[NOI2004]郁闷的出纳员 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+n 表示有多少条命令，min 表示工资下界。
+I k 新建一个工资档案，初始工资为 k。如果某员工的初始工资低于工资下界，他将立刻离开公司(不计入答案)。
+A k 把每位员工的工资加上 k 。
+S k 把每位员工的工资扣除 k(所..." />
+    <meta name="keywords" content="平衡树,无旋Treap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583760426654" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              [NOI2004]郁闷的出纳员
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-09
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/Rju-OW_g2/" class="post-tag">
+                  # 平衡树
+                </a>
+              
+                <a href="https://shaun118294191.github.io/tag/tDB4WeDHR/" class="post-tag">
+                  # 无旋Treap
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/P1486">题目链接</a><br>
+n 表示有多少条命令，min 表示工资下界。<br>
+I k 新建一个工资档案，初始工资为 k。如果某员工的初始工资低于工资下界，他将立刻离开公司(不计入答案)。</p>
+<p>A k 把每位员工的工资加上 k 。</p>
+<p>S k 把每位员工的工资扣除 k(所有工资低于min的员工会立刻离开公司)。</p>
+<p>F k 查询第 k 多的工资</p>
+<p>fhq-Treap维护区间信息即可。</p>
+<p>命令I :</p>
+<pre><code class="language-cpp">inline void insert(Node &amp;root, LL key) {
+    if (key &lt; Min) return;
+    Node L = NULL, R = NULL, tmp = NULL;
+    newNode(tmp, key);
+    split(root, L, R, key);
+    merge(L, L, tmp), merge(root, L, R);
+}
+</code></pre>
+<p>命令A(给root打上标记) :</p>
+<pre><code class="language-cpp">root-&gt;key += k, root-&gt;tag += k;
+</code></pre>
+<p>命令S :</p>
+<pre><code class="language-cpp">root-&gt;key -= k, root-&gt;tag -= k;
+remove(root, Min);
+</code></pre>
+<p>remove函数把key &lt; min的节点分到左二子，令root = R即可</p>
+<pre><code class="language-cpp">inline void remove(Node &amp;root, LL key) {
+    Node L = NULL, R = NULL, tmp = NULL;
+    split(root, L, R, key - 1);
+    leave += L ? L-&gt;size : 0;
+    merge(root, tmp, R);
+}
+</code></pre>
+<p>命令F (第k大 根据右儿子大小判断):</p>
+<pre><code class="language-cpp">inline LL getKth(Node root, int rank) {
+    if (root == NULL) return -1;
+    pushTag(root);
+    int Rsize = Rson ? Rson-&gt;size : 0;
+    if (Rsize &gt;= rank) return getKth(Rson, rank);
+    if (Rsize + 1 == rank) return root-&gt;key; 
+    return getKth(Lson, rank - Rsize - 1);
+}
+</code></pre>
+<p>Code:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+constexpr int MAXN = 2e5 + 5;
+using namespace std;
+using LL = long long;
+template &lt;typename T&gt;
+inline void read(T &amp;x) {
+    int f = 1; x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+struct Treap {
+    Treap *lson, *rson;
+    LL key; 
+    int size, priority, tag;
+}Tree[MAXN], *root;
+using Node = Treap*;
+#define Lson root-&gt;lson
+#define Rson root-&gt;rson
+int n, tot, leave, Min;
+inline void newNode(Node &amp;root, int key) {
+    root = &amp;Tree[++tot], root-&gt;size = 1;
+    root-&gt;key = key, root-&gt;priority = rand();
+}
+inline void update(Node root) {
+    int Lsize = Lson ? Lson-&gt;size : 0, Rsize = Rson ? Rson-&gt;size : 0;
+    root-&gt;size = Lsize + Rsize + 1;
+}
+inline void pushTag(Node root) {
+    if (!root-&gt;tag) return;
+    if (Lson) Lson-&gt;tag += root-&gt;tag, Lson-&gt;key += root-&gt;tag;
+    if (Rson) Rson-&gt;tag += root-&gt;tag, Rson-&gt;key += root-&gt;tag;
+    root-&gt;tag = 0;
+}
+inline void split(Node root, Node &amp;L, Node &amp;R, LL key) {
+    if (root == NULL) {
+        L = R = NULL;
+        return;
+    }
+    pushTag(root);
+    if (root-&gt;key &lt;= key) L = root, split(Rson, Rson, R, key);
+    else R = root, split(Lson, L, Lson, key);
+    update(root);
+}
+inline void merge(Node &amp;root, Node L, Node R) {
+    if (L == NULL) {root = R; return;}
+    if (R == NULL) {root = L; return;}
+    if (L-&gt;priority &lt; R-&gt;priority) pushTag(root = L), merge(Rson, Rson, R);
+    else pushTag(root = R), merge(Lson, L, Lson);
+    update(root);
+}
+inline LL getKth(Node root, int rank) {
+    if (root == NULL) return -1;
+    pushTag(root);
+    int Rsize = Rson ? Rson-&gt;size : 0;
+    if (Rsize &gt;= rank) return getKth(Rson, rank);
+    if (Rsize + 1 == rank) return root-&gt;key; 
+    return getKth(Lson, rank - Rsize - 1);
+}
+inline void insert(Node &amp;root, LL key) {
+    if (key &lt; Min) return;
+    Node L = NULL, R = NULL, tmp = NULL;
+    newNode(tmp, key);
+    split(root, L, R, key);
+    merge(L, L, tmp), merge(root, L, R);
+}
+inline void remove(Node &amp;root, LL key) {
+    Node L = NULL, R = NULL, tmp = NULL;
+    split(root, L, R, key - 1);
+    leave += L ? L-&gt;size : 0;
+    merge(root, tmp, R);
+}
+int main() {
+    read(n), read(Min);
+    for (int i = 1; i &lt;= n; i++) {
+        char s; int k;
+        cin &gt;&gt; s; read(k);
+        if (s == 'I') insert(root, k); 
+        else if (s == 'A') root-&gt;key += k, root-&gt;tag += k;
+        else if (s == 'S') {
+            root-&gt;key -= k, root-&gt;tag -= k;
+            remove(root, Min);
+        }
+        else printf(&quot;%lld\n&quot;, getKth(root, k));
+    }
+    printf(&quot;%d\n&quot;, leave);
+    return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/cf609e-minimum-spanning-tree-for-each-edge/">
+              <h3 class="post-title">
+                CF609E Minimum spanning tree for each edge
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
