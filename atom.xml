@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-11T01:56:18.505Z</updated>
+    <updated>2020-03-11T01:57:24.128Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -34,7 +34,7 @@
 <p>注:</p>
 <ul>
 <li>最大收益可能为-2e9。</li>
-<li>对pair排序以及upper_bound, 为防止第二关键值影响需将其设为Inf<br>
+<li>对pair排序以及upper_bound, 为防止临时变量第二关键值影响需将其设为Inf<br>
 <code>int pos = upper_bound(armor.begin(), armor.end(), make_pair(y, Inf)) - armor.begin();</code></li>
 </ul>
 <p>Code:</p>
