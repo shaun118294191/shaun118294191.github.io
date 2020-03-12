@@ -2,22 +2,22 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>P1944 最长括号匹配 | Shaun</title>
+<title>P3806 【模板】点分治1 | Shaun</title>
 <link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583985658148">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="P1944 最长括号匹配 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="P3806 【模板】点分治1 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="题目链接
-求最长括号序列, 若有相同长度的括号序列，则输出最靠前的。
-合法括号序列: [], (), [()], [()], ()()[]
-
-用栈来维护下标, 用C[i]表示i处最长括号序列长度。
-读入'(' 或 '['就压入栈, 否则判断..." />
-    <meta name="keywords" content="线性dp,栈" />
+    <meta name="description" content="给定一棵有 n 个点的树。
+询问树上距离为 k 的点对是否存在。
+#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e4 + 4;
+using namespace std;
+templa..." />
+    <meta name="keywords" content="点分治" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
@@ -79,89 +79,91 @@
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              P1944 最长括号匹配
+              P3806 【模板】点分治1
             </h2>
             <div class="post-info">
               <span>
-                2020-03-05
+                2020-03-12
               </span>
               <span>
-                2 min read
+                3 min read
               </span>
               
-                <a href="https://shaun118294191.github.io/tag/1hKgYXBhA/" class="post-tag">
-                  # 线性dp
-                </a>
-              
-                <a href="https://shaun118294191.github.io/tag/aKqZ2s8m5/" class="post-tag">
-                  # 栈
+                <a href="https://shaun118294191.github.io/tag/0R5XHO00D/" class="post-tag">
+                  # 点分治
                 </a>
               
             </div>
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p><a href="https://www.luogu.com.cn/problem/P1944">题目链接</a></p>
-<p>求最长括号序列, 若有相同长度的括号序列，则输出最靠前的。</p>
-<p>合法括号序列: [], (), [()], [()], <a href="">()()</a>[]</p>
-<ul>
-<li>用栈来维护下标, 用C[i]表示i处最长括号序列长度。</li>
-<li>读入'(' 或 '['就压入栈, 否则判断当前字符是否与栈顶元素匹配。</li>
-<li>如果匹配，则有C[i] = i - Stack[top] + 1 + C[Stack[top] - 1]，并弹出栈顶元素。示例 <a href="">()</a></li>
-<li>若不匹配，则清空栈。示例[)]，不清空则会出错。</li>
-</ul>
-<pre><code class="language-cpp">    for (int i = 1; i &lt; s.size(); i++) {
-        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
-        else if (top) {
-            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
-                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
-                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
-                maxL = max(maxL, C[i]);
-                top--;
-            } else while(top) top--;
-        }
-    }
-</code></pre>
-<p>最后遍历字符串找到第一个C[i] = maxLen的位置，输出即可。</p>
-<p>Code:</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-constexpr int MAXN = 1e6 + 6;
-constexpr int MAXM = 1e4 + 4;
+                <p>给定一棵有 n 个点的树。</p>
+<p>询问树上距离为 k 的点对是否存在。</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e4 + 4;
 using namespace std;
-template &lt;typename T&gt;
-
-inline void read(T &amp;x) {
-    int f = 1;
-    x = 0;
+template&lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0;
     char ch = getchar();
     while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
     while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
     x *= f;
 }
-
-string s, cur, ans;
-int Stack[MAXN], top, C[MAXN], maxL(-1);
-
+vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
+int n, m, tot, cnt, root;
+int sz[MAXN], dp[MAXN], vis[MAXN];
+int query[MAXN], res[MAXN];
+int vec[MAXN], dis[MAXN], cntDis[MAXN &lt;&lt; 10];
+inline void getRoot(int cur, int fa) { //求树的重心 自上而下
+    sz[cur] = 1, dp[cur] = 0;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        getRoot(to, cur);
+        sz[cur] += sz[to];
+        dp[cur] = max(dp[cur], sz[to]);
+    }
+    dp[cur] = max(dp[cur], tot - sz[cur]);
+    if (dp[cur] &lt; dp[root]) root = cur;
+}
+inline void getDis(int cur, int fa) { //求出到根root的距离
+    if (dis[cur] &lt;= 1e7) 
+        vec[cnt++] = dis[cur], cntDis[dis[cur]]++;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w;
+        getDis(to, cur);
+    }
+}
+inline void calc(int cur, int w, int type) { //cur为有根树的根节点(重心) type为1表示加
+    cnt = 0, dis[cur] = w, getDis(cur, 0);
+    for (int j = 1; j &lt;= m; j++)
+        for (int i = 0; i &lt; cnt; i++)
+            if (vec[i] &lt;= query[j]) res[j] += type * cntDis[vec[i]] * cntDis[query[j] - vec[i]];
+    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i]] = false;
+}
+inline void dfs(int cur) {
+    vis[cur] = true, calc(cur, 0, 1);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (vis[to]) continue;
+        calc(to, w, -1); //容斥 减去儿子中的路径数 注意要加上w
+        root = cur, tot = dp[root] = sz[to]; //准备重新选择根节点
+        getRoot(to, root), dfs(root);
+    }
+}
 int main() {
-    std::ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    cin &gt;&gt; s, s = &quot; &quot; + s;
-    for (int i = 1; i &lt; s.size(); i++) {
-        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
-        else if (top) {
-            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
-                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
-                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
-                maxL = max(maxL, C[i]);
-                top--;
-            } else while(top) top--;
-        }
+    read(n), read(m);
+    for (int i = 1, u, v, w; i &lt; n; i++) {
+        read(u), read(v), read(w);
+        G[u].emplace_back(make_pair(v, w)), G[v].emplace_back(make_pair(u, w));
     }
-    for (int i = 1; i &lt; s.size(); i++) {
-        if (C[i] == maxL) {
-            for (int j = i - maxL + 1; j &lt;= i; j++)cout &lt;&lt; s[j];
-            return 0;
-        }
-    }
+    for (int i = 1; i &lt;= m; i++) read(query[i]);
+    root = 0, tot = dp[root] = n;
+    getRoot(1, root), dfs(root);
+    for (int i = 1; i &lt;= m; i++)
+        res[i] &gt; 0 ? puts(&quot;AYE&quot;) : puts(&quot;NAY&quot;);
     return 0;
 }
 </code></pre>
@@ -177,9 +179,9 @@ int main() {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://shaun118294191.github.io/post/wen-yi-ping-heng-shu/">
+            <a href="https://shaun118294191.github.io/post/p4178-tree/">
               <h3 class="post-title">
-                文艺平衡树
+                P4178 Tree
               </h3>
             </a>
           </div>

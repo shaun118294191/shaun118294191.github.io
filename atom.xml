@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-11T01:57:24.128Z</updated>
+    <updated>2020-03-12T04:01:15.230Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,161 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[P3806 【模板】点分治1]]></title>
+        <id>https://shaun118294191.github.io/post/p3806-mo-ban-dian-fen-zhi-1/</id>
+        <link href="https://shaun118294191.github.io/post/p3806-mo-ban-dian-fen-zhi-1/">
+        </link>
+        <updated>2020-03-12T03:59:14.000Z</updated>
+        <content type="html"><![CDATA[<p>给定一棵有 n 个点的树。</p>
+<p>询问树上距离为 k 的点对是否存在。</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e4 + 4;
+using namespace std;
+template&lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
+int n, m, tot, cnt, root;
+int sz[MAXN], dp[MAXN], vis[MAXN];
+int query[MAXN], res[MAXN];
+int vec[MAXN], dis[MAXN], cntDis[MAXN &lt;&lt; 10];
+inline void getRoot(int cur, int fa) { //求树的重心 自上而下
+    sz[cur] = 1, dp[cur] = 0;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        getRoot(to, cur);
+        sz[cur] += sz[to];
+        dp[cur] = max(dp[cur], sz[to]);
+    }
+    dp[cur] = max(dp[cur], tot - sz[cur]);
+    if (dp[cur] &lt; dp[root]) root = cur;
+}
+inline void getDis(int cur, int fa) { //求出到根root的距离
+    if (dis[cur] &lt;= 1e7) 
+        vec[cnt++] = dis[cur], cntDis[dis[cur]]++;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w;
+        getDis(to, cur);
+    }
+}
+inline void calc(int cur, int w, int type) { //cur为有根树的根节点(重心) type为1表示加
+    cnt = 0, dis[cur] = w, getDis(cur, 0);
+    for (int j = 1; j &lt;= m; j++)
+        for (int i = 0; i &lt; cnt; i++)
+            if (vec[i] &lt;= query[j]) res[j] += type * cntDis[vec[i]] * cntDis[query[j] - vec[i]];
+    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i]] = false;
+}
+inline void dfs(int cur) {
+    vis[cur] = true, calc(cur, 0, 1);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (vis[to]) continue;
+        calc(to, w, -1); //容斥 减去儿子中的路径数 注意要加上w
+        root = cur, tot = dp[root] = sz[to]; //准备重新选择根节点
+        getRoot(to, root), dfs(root);
+    }
+}
+int main() {
+    read(n), read(m);
+    for (int i = 1, u, v, w; i &lt; n; i++) {
+        read(u), read(v), read(w);
+        G[u].emplace_back(make_pair(v, w)), G[v].emplace_back(make_pair(u, w));
+    }
+    for (int i = 1; i &lt;= m; i++) read(query[i]);
+    root = 0, tot = dp[root] = n;
+    getRoot(1, root), dfs(root);
+    for (int i = 1; i &lt;= m; i++)
+        res[i] &gt; 0 ? puts(&quot;AYE&quot;) : puts(&quot;NAY&quot;);
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
+    <entry>
+        <title type="html"><![CDATA[P4178 Tree]]></title>
+        <id>https://shaun118294191.github.io/post/p4178-tree/</id>
+        <link href="https://shaun118294191.github.io/post/p4178-tree/">
+        </link>
+        <updated>2020-03-11T13:12:36.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P4178">题目链接</a><br>
+更新中……</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 4e4 + 4;
+using namespace std;
+template&lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
+vector&lt;int&gt; vec;
+int n, k, tot, root, res;
+int sz[MAXN], dp[MAXN], dis[MAXN], vis[MAXN];
+inline void getRoot(int cur, int fa) { //求树的重心 自上而下
+    sz[cur] = 1, dp[cur] = 0;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        getRoot(to, cur);
+        sz[cur] += sz[to];
+        dp[cur] = max(dp[cur], sz[to]);
+    }
+    dp[cur] = max(dp[cur], tot - sz[cur]);
+    if (dp[cur] &lt; dp[root]) root = cur;
+}
+inline void getDis(int cur, int fa) { //求出到根root的距离
+    vec.emplace_back(dis[cur]);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w;
+        getDis(to, cur);
+    }
+}
+inline void calc(int cur, int w, int type) { //cur为有根树的根节点(重心) type为1表示加
+    dis[cur] = w, vec.clear(), getDis(cur, 0);
+    sort(vec.begin(), vec.end());
+    int l = 0, r = (int)vec.size() - 1;
+    while (l &lt;= r) {
+        if (vec[l] + vec[r] &lt;= k) res += type * (r - l), ++l;
+        else --r;
+    }
+}
+inline void dfs(int cur) {
+    vis[cur] = true, calc(root, 0, 1);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (vis[to]) continue;
+        calc(to, w, -1); //容斥思想 减去儿子中的路径数 注意要加上w
+        root = cur, tot = dp[root] = sz[to]; //准备重新选择根节点
+        getRoot(to, root), dfs(root);
+    }
+}
+int main() {
+    read(n);
+    for (int i = 1, u, v, w; i &lt; n; i++) {
+        read(u), read(v), read(w);
+        G[u].emplace_back(make_pair(v, w)), G[v].emplace_back(make_pair(u, w));
+    }
+    read(k);
+    root = 0, tot = dp[root] = n;
+    getRoot(1, root), dfs(root);
+    cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CF1320C World of Darkraft: Battle for Azathoth]]></title>
         <id>https://shaun118294191.github.io/post/cf1320c-world-of-darkraft-battle-for-azathoth/</id>
@@ -969,183 +1124,6 @@ int main(){
 }
 </code></pre>
 <p>Map合并:</p>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[P1944 最长括号匹配]]></title>
-        <id>https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/</id>
-        <link href="https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/">
-        </link>
-        <updated>2020-03-05T11:21:27.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P1944">题目链接</a></p>
-<p>求最长括号序列, 若有相同长度的括号序列，则输出最靠前的。</p>
-<p>合法括号序列: [], (), [()], [()], <a href="">()()</a>[]</p>
-<ul>
-<li>用栈来维护下标, 用C[i]表示i处最长括号序列长度。</li>
-<li>读入'(' 或 '['就压入栈, 否则判断当前字符是否与栈顶元素匹配。</li>
-<li>如果匹配，则有C[i] = i - Stack[top] + 1 + C[Stack[top] - 1]，并弹出栈顶元素。示例 <a href="">()</a></li>
-<li>若不匹配，则清空栈。示例[)]，不清空则会出错。</li>
-</ul>
-<pre><code class="language-cpp">    for (int i = 1; i &lt; s.size(); i++) {
-        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
-        else if (top) {
-            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
-                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
-                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
-                maxL = max(maxL, C[i]);
-                top--;
-            } else while(top) top--;
-        }
-    }
-</code></pre>
-<p>最后遍历字符串找到第一个C[i] = maxLen的位置，输出即可。</p>
-<p>Code:</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-constexpr int MAXN = 1e6 + 6;
-constexpr int MAXM = 1e4 + 4;
-using namespace std;
-template &lt;typename T&gt;
-
-inline void read(T &amp;x) {
-    int f = 1;
-    x = 0;
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-
-string s, cur, ans;
-int Stack[MAXN], top, C[MAXN], maxL(-1);
-
-int main() {
-    std::ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    cin &gt;&gt; s, s = &quot; &quot; + s;
-    for (int i = 1; i &lt; s.size(); i++) {
-        if (s[i] == '(' || s[i] == '[') Stack[++top] = i;
-        else if (top) {
-            if ((s[i] == ']' &amp;&amp; s[Stack[top]] == '[') ||
-                (s[i] == ')' &amp;&amp; s[Stack[top]] == '(')) {
-                C[i] = i - Stack[top] + 1 + C[Stack[top] - 1];
-                maxL = max(maxL, C[i]);
-                top--;
-            } else while(top) top--;
-        }
-    }
-    for (int i = 1; i &lt; s.size(); i++) {
-        if (C[i] == maxL) {
-            for (int j = i - maxL + 1; j &lt;= i; j++)cout &lt;&lt; s[j];
-            return 0;
-        }
-    }
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[文艺平衡树]]></title>
-        <id>https://shaun118294191.github.io/post/wen-yi-ping-heng-shu/</id>
-        <link href="https://shaun118294191.github.io/post/wen-yi-ping-heng-shu/">
-        </link>
-        <updated>2020-03-04T10:13:27.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P3391">题目链接</a><br>
-您需要写一种数据结构（可参考题目标题），来维护一个有序数列。</p>
-<p>其中需要提供以下操作：翻转一个区间，例如原有序序列是5 4 3 2 1，翻转区间是 [2,4]的话，结果是 5 2 3 4 1。</p>
-<p>无旋Treap：<br>
-初始化：直接将1~i merge到root即可。</p>
-<pre><code class="language-cpp">for (int i = 1; i &lt;= n; i++) 
-		newNode(tmp, i), merge(root, root, tmp); //直接merge
-</code></pre>
-<p>区间反转需按子树size分裂将整棵树分裂为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>1</mn><mo separator="true">,</mo><mi>l</mi><mo>−</mo><mn>1</mn><mo>]</mo></mrow><annotation encoding="application/x-tex">[1, l - 1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">]</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>r</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>n</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[r + 1, n]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault">n</span><span class="mclose">]</span></span></span></span>，并将[l, r]对应的root加上标记。</p>
-<pre><code class="language-cpp">inline void rev(Node &amp;root, int l, int r) {
-   Node L = NULL, mid = NULL, R = NULL;
-   split(root, L, R, r), split(L, L, mid, l - 1); //分出[l, r]的部分
-   mid-&gt;tag ^= 1;
-   merge(L, L, mid), merge(root, L, R);
-}
-</code></pre>
-<p>区间反转交换无旋Treap的左右儿子并下放标记(split和merge都要pushdown)。</p>
-<pre><code class="language-cpp">inline void pushTag(Node root) {
-	if (root-&gt;tag == 0) return;
-	swap(Lson, Rson); //区间反转 交换左右儿子再打上标记即可
-	if (Lson) Lson-&gt;tag ^= 1; if (Rson) Rson-&gt;tag ^= 1;
-	root-&gt;tag = 0;
-}
-</code></pre>
-<p>Code:</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-const int MAXN = 1e5 + 5;
-using namespace std;
-template &lt;typename T&gt; inline void read(T &amp;x) {
-    int f = 1; x = 0; 
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-struct Treap {
-	Treap * lson, *rson;
-	int size, priority;
-	int key, tag;
-}Tree[MAXN &lt;&lt; 1], *root, *tmp;
-typedef Treap * Node;
-#define Lson root-&gt;lson
-#define Rson root-&gt;rson
-int n, m, tot, l, r;
-inline void newNode(Node &amp;root, int key) {
-	root = &amp;Tree[++tot], root-&gt;size = 1;
-	root-&gt;key = key, root-&gt;priority = rand();
-}
-inline void update(Node root) {
-	int Lsize = Lson ? Lson-&gt;size : 0, Rsize = Rson ? Rson-&gt;size : 0;
-	root-&gt;size = Lsize + Rsize + 1;
-}
-inline void pushTag(Node root) {
-	if (root-&gt;tag == 0) return;
-	swap(Lson, Rson); //区间反转 交换左右儿子再打上标记即可
-	if (Lson) Lson-&gt;tag ^= 1; if (Rson) Rson-&gt;tag ^= 1;
-	root-&gt;tag = 0;
-}
-inline void split(Node root, Node &amp;L, Node &amp;R, int size) {
-	if (root == NULL) {
-		L = R = NULL;
-		return;
-	}
-	pushTag(root); //分裂前下放标记到左右子树
-	int Lsize = Lson ? Lson-&gt;size : 0;
-	if (Lsize + 1 &lt;= size) L = root, split(Rson, Rson, R, size - Lsize - 1);
-	else R = root, split(Lson, L, Lson, size);
-	update(root);
-}
-inline void merge(Node &amp;root, Node L, Node R) {
-	if (L == NULL) {root = R; return;}
-	if (R == NULL) {root = L; return;}
-	if (L-&gt;priority &lt; R-&gt;priority) pushTag(root = L), merge(Rson, Rson, R);
-	else pushTag(root = R), merge(Lson, L, Lson);
-	update(root);
-}
-inline void rev(Node &amp;root, int l, int r) {
-	Node L = NULL, mid = NULL, R = NULL;
-	split(root, L, R, r), split(L, L, mid, l - 1); //分出[l, r]的部分
-	mid-&gt;tag ^= 1;
-	merge(L, L, mid), merge(root, L, R);
-}
-inline void print(Node root) { //中序遍历输出
-	if (root == NULL) return;
-	pushTag(root);
-	print(Lson), printf(&quot;%d &quot;, root-&gt;key), print(Rson);
-}
-int main() {
-	srand(time(0));
-	read(n), read(m);
-	for (int i = 1; i &lt;= n; i++) 
-		newNode(tmp, i), merge(root, root, tmp); //直接merge
-	while (m--) read(l), read(r), rev(root, l, r);
-	print(root);
-	return 0;
-}
-</code></pre>
 ]]></content>
     </entry>
 </feed>
