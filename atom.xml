@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-12T05:11:14.194Z</updated>
+    <updated>2020-03-12T05:12:32.917Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -31,7 +31,7 @@
     for (int i = 0; i &lt; cnt; i++) cntDis[vec[i]] = false;
 }
 </code></pre>
-<p>不合法的点对数在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><msub><mi>n</mi><mi>r</mi></msub><mi>o</mi><mi>o</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">son_root</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span></span></span></span> 中减去即可。<br>
+<p>不合法的点对数在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><msub><mi>n</mi><mrow><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi></mrow></msub></mrow><annotation encoding="application/x-tex">son_{root}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.2805559999999999em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 中减去即可。<br>
 <code>calc(to, w, -1); //容斥 减去儿子中的路径数 注意要加上w</code></p>
 <p>Code:</p>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
