@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-12T05:01:11.704Z</updated>
+    <updated>2020-03-12T05:10:50.510Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -16,8 +16,24 @@
         <link href="https://shaun118294191.github.io/post/p3806-mo-ban-dian-fen-zhi-1/">
         </link>
         <updated>2020-03-12T03:59:14.000Z</updated>
-        <content type="html"><![CDATA[<p>给定一棵有 n 个点的树。</p>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P3806">题目链接</a><br>
+给定一棵有 n 个点的树。</p>
 <p>询问树上距离为 k 的点对是否存在。</p>
+<p>method:<br>
+求出以root为根的子树中的cntDis[dis] (dis <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo></mrow><annotation encoding="application/x-tex">\le</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span></span></span></span> 1e7)。</p>
+<p>则cntDis[dis] * cnt[k - dis]即为距离为k的点对数<br>
+(统计完清0即可，不要memset; 对每个询问都点分治一次要超时; 也可在子树中一一统计)。</p>
+<pre><code class="language-cpp">inline void calc(int cur, int w, int type) { //cur为有根树的根节点(重心) type为1表示加
+    cnt = 0, dis[cur] = w, getDis(cur, 0);
+    for (int j = 1; j &lt;= m; j++)
+        for (int i = 0; i &lt; cnt; i++)
+            if (vec[i] &lt;= query[j]) res[j] += type * cntDis[vec[i]] * cntDis[query[j] - vec[i]];
+    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i]] = false;
+}
+</code></pre>
+<p>不合法的点对数在 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>o</mi><msub><mi>n</mi><mi>r</mi></msub><mi>o</mi><mi>o</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">son_root</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76508em;vertical-align:-0.15em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault">n</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span></span></span></span> 中减去即可。<br>
+<code>calc(to, w, -1); //容斥 减去儿子中的路径数 注意要加上w</code></p>
+<p>Code:</p>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 constexpr int MAXN = 1e4 + 4;
 using namespace std;
