@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>P4178 Tree | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583985658148">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583989268707">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="P4178 Tree | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
@@ -12,11 +12,11 @@
 
 
     <meta name="description" content="题目链接
-更新中……
-#include&lt;bits/stdc++.h&gt;
-constexpr int MAXN = 4e4 + 4;
-using namespace std;
-template&lt;typename T&gt; i..." />
+求树上长度不超过 k 的路径数。
+若节点 root 为根，则对 root 而言，树上路径可分为2类：
+1.经过根节点 root 。（分为 x~root, root~y ）
+2.包含于 root 的某一棵子树中。(不经过根节点)
+对..." />
     <meta name="keywords" content="点分治" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -26,7 +26,7 @@ template&lt;typename T&gt; i..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583985658148" alt="">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583989268707" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -86,7 +86,7 @@ template&lt;typename T&gt; i..." />
                 2020-03-11
               </span>
               <span>
-                3 min read
+                5 min read
               </span>
               
                 <a href="https://shaun118294191.github.io/tag/0R5XHO00D/" class="post-tag">
@@ -98,7 +98,53 @@ template&lt;typename T&gt; i..." />
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p><a href="https://www.luogu.com.cn/problem/P4178">题目链接</a><br>
-更新中……</p>
+求树上长度不超过 k 的路径数。</p>
+<p>若节点 root 为根，则对 root 而言，树上路径可分为2类：<br>
+1.经过根节点 root 。（分为 x~root, root~y ）<br>
+2.包含于 root 的某一棵子树中。(不经过根节点)</p>
+<p>对于当前节点 root , dfs 求出子树节点到其的距离dis[node]。</p>
+<pre><code class="language-cpp">inline void getDis(int cur, int fa) { //求出到根root的距离
+    vec.emplace_back(dis[cur]);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w;
+        getDis(to, cur);
+    }
+}
+</code></pre>
+<p>将 dis[] 数组升序排序，使用两个指针 l, r 从前、后开始扫描数组。</p>
+<p>容易发现，在 l 从左到右扫描的过程中，恰好使得 dis[l] + dis[r] <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>≤</mo></mrow><annotation encoding="application/x-tex">\le</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.7719400000000001em;vertical-align:-0.13597em;"></span><span class="mrel">≤</span></span></span></span> k 的 r 是从右向左递减的，于是符合条件的点对有 r - l 对。</p>
+<pre><code class="language-cpp">inline void calc(int cur, int w, int type) { //cur为有根树的根节点(重心) type为1表示加
+    dis[cur] = w, vec.clear(), getDis(cur, 0);
+    sort(vec.begin(), vec.end());
+    int l = 0, r = (int)vec.size() - 1;
+    while (l &lt;= r) {
+        if (vec[l] + vec[r] &lt;= k) res += type * (r - l), ++l;
+        else --r;
+    }
+}
+</code></pre>
+<p>不过一些点对在root的某一棵子树中，且会使 root 与其儿子间的边被经过两次。可以以 root 的儿子节点为根, dis[son] = <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>w</mi><mrow><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo separator="true">,</mo><mi>s</mi><mi>o</mi><mi>n</mi></mrow></msub></mrow><annotation encoding="application/x-tex">w_{root, son}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02691em;">w</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.28055599999999997em;"><span style="top:-2.5500000000000003em;margin-left:-0.02691em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">t</span><span class="mpunct mtight">,</span><span class="mord mathdefault mtight">s</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight">n</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>，再次求dis[]并统计, 减去这部分的结果即可( son 子树满足条件的在 root 中不满足)。<br>
+<code>calc(to, w, -1); //容斥思想 减去儿子中的路径数 注意dis要加上w</code></p>
+<p>于是可不断选取 root 并统计：<br>
+1.若递归深度为 T 层，则总时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mi>T</mi><mi>N</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">O(TNlogN)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span>。<br>
+2.若选取的root为子树重心，则root的子树大小不会超过原子树大小的一半，点分治最多<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi></mrow><annotation encoding="application/x-tex">logN</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span></span></span></span>层。</p>
+<pre><code class="language-cpp">inline void getRoot(int cur, int fa) { //求树的重心 自上而下
+    sz[cur] = 1, dp[cur] = 0;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (to == fa || vis[to]) continue;
+        getRoot(to, cur);
+        sz[cur] += sz[to];
+        dp[cur] = max(dp[cur], sz[to]);
+    }
+    dp[cur] = max(dp[cur], tot - sz[cur]);
+    if (dp[cur] &lt; dp[root]) root = cur;
+}
+</code></pre>
+<p>时间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>N</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi><mi>l</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(NlogNlogN)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mclose">)</span></span></span></span>。</p>
+<p>Code:</p>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 constexpr int MAXN = 4e4 + 4;
 using namespace std;
