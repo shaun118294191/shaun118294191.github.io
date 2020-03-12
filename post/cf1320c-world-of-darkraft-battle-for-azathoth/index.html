@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>CF1320C World of Darkraft: Battle for Azathoth | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583989847071">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1583989870922">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="CF1320C World of Darkraft: Battle for Azathoth | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
@@ -23,7 +23,7 @@
       <div class="main-content">
         <div class="site-header">
   <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583989847071" alt="">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1583989870922" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -104,7 +104,7 @@
 <ul>
 <li>将怪物按照防御x排序，从小到大处理(类似扫描线)。</li>
 </ul>
-<pre><code>    for (int i = 0, v, c; i &lt; n; i++) //武器与怪物防御力放在一起排序
+<pre><code class="language-cpp">    for (int i = 0, v, c; i &lt; n; i++) //武器与怪物防御力放在一起排序
         read(v), read(c), vec.emplace_back(make_pair(v - 1, make_pair(Inf, c)));
     for(...) vec.emplace_back(make_pair(def, make_pair(atk, c)));
 </code></pre>
@@ -120,7 +120,7 @@
 <code>int pos = upper_bound(armor.begin(), armor.end(), make_pair(y, Inf)) - armor.begin();</code></li>
 </ul>
 <p>Code:</p>
-<pre><code>#include&lt;bits/stdc++.h&gt;
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 constexpr int MAXN = 2e5 + 5;
 constexpr int Inf = 0x7fffffff;
 using namespace std;

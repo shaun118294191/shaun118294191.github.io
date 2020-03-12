@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-12T05:10:50.510Z</updated>
+    <updated>2020-03-12T05:11:14.194Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -239,7 +239,7 @@ int main() {
 <ul>
 <li>将怪物按照防御x排序，从小到大处理(类似扫描线)。</li>
 </ul>
-<pre><code>    for (int i = 0, v, c; i &lt; n; i++) //武器与怪物防御力放在一起排序
+<pre><code class="language-cpp">    for (int i = 0, v, c; i &lt; n; i++) //武器与怪物防御力放在一起排序
         read(v), read(c), vec.emplace_back(make_pair(v - 1, make_pair(Inf, c)));
     for(...) vec.emplace_back(make_pair(def, make_pair(atk, c)));
 </code></pre>
@@ -255,7 +255,7 @@ int main() {
 <code>int pos = upper_bound(armor.begin(), armor.end(), make_pair(y, Inf)) - armor.begin();</code></li>
 </ul>
 <p>Code:</p>
-<pre><code>#include&lt;bits/stdc++.h&gt;
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
 constexpr int MAXN = 2e5 + 5;
 constexpr int Inf = 0x7fffffff;
 using namespace std;
