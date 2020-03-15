@@ -2,18 +2,18 @@
   <head>
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>CF161D Distance in Tree | Shaun</title>
+<title>Rebuild Teldrassil | Shaun</title>
 <link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1584253483148">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="CF161D Distance in Tree | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="alternate" type="application/atom+xml" title="Rebuild Teldrassil | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
 
-    <meta name="description" content="求数上长度恰好为 k 的路径数。
-点分治即可(k较大或为负数时也可做)：对于当前 root 依次遍历子树，记录子树节点到根的路径长度以及相应的cntDis。访问下一棵子树时用已访问的cntDis更新答案即可。
-inline void cal..." />
+    <meta name="description" content="题目链接(内部题目)
+题意：有一棵树，每个点有权值，一条路径的中位数大于等于 x 时，认为这条路径是重要的，现在你可以改变一个节点的权值，求改变后最多可以新增加多少重要路径。
+将所有小于x的点认为权值是 -1，大于等于x的点权值认为是 1，..." />
     <meta name="keywords" content="点分治" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -76,14 +76,14 @@ inline void cal..." />
         <div class="post-detail">
           <article class="post">
             <h2 class="post-title">
-              CF161D Distance in Tree
+              Rebuild Teldrassil
             </h2>
             <div class="post-info">
               <span>
-                2020-03-13
+                2020-03-15
               </span>
               <span>
-                3 min read
+                6 min read
               </span>
               
                 <a href="https://shaun118294191.github.io/tag/0R5XHO00D/" class="post-tag">
@@ -94,44 +94,73 @@ inline void cal..." />
             
             <div class="post-content-wrapper">
               <div class="post-content">
-                <p>求数上长度恰好为 k 的路径数。</p>
-<p>点分治即可(k较大或为负数时也可做)：对于当前 root 依次遍历子树，记录子树节点到根的路径长度以及相应的cntDis。访问下一棵子树时用已访问的cntDis更新答案即可。</p>
-<pre><code class="language-cpp">inline void calc(int cur) {
-    int Cnt(0);
+                <p><a href="https://www.luogu.com.cn/problem/T123576">题目链接(内部题目)</a></p>
+<p>题意：有一棵树，每个点有权值，一条路径的中位数大于等于 x 时，认为这条路径是重要的，现在你可以改变一个节点的权值，求改变后最多可以新增加多少重要路径。</p>
+<p>将所有小于x的点认为权值是 -1，大于等于x的点权值认为是 1，一条路径的和如果大于等于 0，则这条路径是重要的，修改一个点可以将这个点从 -1 改为 1 ，对于每一个 -1 的点，统计有多少条过该点的权值为 -1 or -2 的路径。</p>
+<p>求出长度为 -1 或 -2 的路径数比较容易，但是本题要求经过某一点长度为 -1 或 -2 的路径数，不能简单地在子树中统计。</p>
+<p>对于一条经过根的长度为k的路径， 若这条路径在某个子树中的终点为node , 则从node到根的节点都经过这条路径。</p>
+<p>于是把以 node 为终点长度为 k 的路径数存在到add[node]数组，并累加到add[father[node]]中。过程如下：</p>
+<p>先遍历所有子树求出cntDis[], 记录father (根节点答案需单独处理)。<br>
+dfs:</p>
+<pre><code class="language-cpp">inline void getDis(int cur, int fa) {
+    add[cur] = 0;
+    vec[cnt++] = make_pair(dis[cur], cur);
     for (auto &amp;to : G[cur]) {
-        if (vis[to]) continue;
-        cnt = 0, dis[to] = 1, getDis(to, cur);
-        for (int i = 0; i &lt; cnt; i++) {
-            res += cntDis[k - vec[i]];
-            if (vec[i] == k) res++; //子节点到根的路径
-        }
-        for (int i = 0; i &lt; cnt; i++)
-            vecBig[Cnt++] = vec[i], cntDis[vec[i]]++;
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w[to];
+        father[to] = cur;
+        getDis(to, cur);
     }
-    for (int i = 0; i &lt; Cnt; i++) cntDis[vecBig[i]] = 0;
 }
 </code></pre>
-<p>Code:</p>
+<p>calc:</p>
+<pre><code class="language-cpp">    for (auto &amp;to : G[cur]) {
+        if (vis[to]) continue;
+        cnt = 0, dis[to] = w[to], getDis(to, cur);
+        for (int i = 0; i &lt; cnt; i++) {
+            int d = vec[i].first;
+            res[cur] += cntDis[-1 - w[cur] - d + ADD] + cntDis[-2 - w[cur] - d + ADD];
+            if (d + w[cur] == -1 || d + w[cur] == -2) res[cur]++; //只经过根节点，不经过另一颗子树
+        }
+        for (int i = 0; i &lt; cnt; i++)
+            vecBig[Cnt++] = vec[i], cntDis[vec[i].first + ADD]++; //保存已访问子树的结果
+    }
+</code></pre>
+<p>再次遍历子树，减去cntDis, 求出add[], 再将cntDis加回。<br>
+calc:</p>
+<pre><code class="language-cpp">    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i].first + ADD]--;
+    for (int i = cnt - 1; i &gt;= 0; i--) {
+            int d = vec[i].first, node = vec[i].second;
+            add[node] += cntDis[-1 - w[cur] - d + ADD] + cntDis[-2 - w[cur] - d + ADD];
+            if (d + w[cur] == -1 || d + w[cur] == -2) add[node]++; //只经过根节点，不经过另一颗子树
+            add[father[node]] += add[node];
+            res[node] += add[node];
+    }
+    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i].first + ADD]++;
+</code></pre>
+<p>Code(NlogN):</p>
 <pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-constexpr int MAXN = 5e4 + 4;
-//CF161D Distance in Tree
+constexpr int MAXN = 4e5 + 4;
+constexpr int ADD = 3e5 + 3;
 using namespace std;
 template &lt;typename T&gt; inline void read(T &amp;x) {
     int f = 1; x = 0;
     char ch = getchar();
-    while (!isdigit(ch)) ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
     while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
     x *= f;
 }
 vector&lt;int&gt; G[MAXN];
-int n, k, root, cnt, tot;
-long long res;
-using A = int [MAXN];
-A dp, cntDis, vec, vecBig, sz, dis, vis;
+int w[MAXN], dp[MAXN], sz[MAXN], father[MAXN];
+long long res[MAXN], add[MAXN];
+int vis[MAXN], dis[MAXN];
+pair &lt;int, int&gt; vec[MAXN], vecBig[MAXN];
+int n, x, tot, cnt, root;
+int cntDis[MAXN &lt;&lt; 1], cntDis[MAXN &lt;&lt; 1];
 inline void getRoot(int cur, int fa) {
     sz[cur] = 1, dp[cur] = 0;
     for (auto &amp;to : G[cur]) {
-        if (vis[to] || fa == to) continue;
+        if (to == fa || vis[to]) continue;
         getRoot(to, cur);
         sz[cur] += sz[to];
         dp[cur] = max(dp[cur], sz[to]);
@@ -140,10 +169,12 @@ inline void getRoot(int cur, int fa) {
     if (dp[cur] &lt; dp[root]) root = cur;
 }
 inline void getDis(int cur, int fa) {
-    vec[cnt++] = dis[cur];
-    for (auto &amp;to :G[cur]) {
-        if (vis[to] || to == fa) continue;
-        dis[to] = dis[cur] + 1;
+    add[cur] = 0;
+    vec[cnt++] = make_pair(dis[cur], cur);//, cntDis[dis[cur] + ADD]++;
+    for (auto &amp;to : G[cur]) {
+        if (to == fa || vis[to]) continue;
+        dis[to] = dis[cur] + w[to];
+        father[to] = cur;
         getDis(to, cur);
     }
 }
@@ -151,15 +182,29 @@ inline void calc(int cur) {
     int Cnt(0);
     for (auto &amp;to : G[cur]) {
         if (vis[to]) continue;
-        cnt = 0, dis[to] = 1, getDis(to, cur);
+        cnt = 0, dis[to] = w[to], getDis(to, cur);
         for (int i = 0; i &lt; cnt; i++) {
-            res += cntDis[k - vec[i]];
-            if (vec[i] == k) res++; // //子节点到根的路径
+            int d = vec[i].first;
+            res[cur] += cntDis[-1 - w[cur] - d + ADD] + cntDis[-2 - w[cur] - d + ADD];
+            if (d + w[cur] == -1 || d + w[cur] == -2) res[cur]++;
         }
         for (int i = 0; i &lt; cnt; i++)
-            vecBig[Cnt++] = vec[i], cntDis[vec[i]]++;
+            vecBig[Cnt++] = vec[i], cntDis[vec[i].first + ADD]++; //保存已访问子树的结果
     }
-    for (int i = 0; i &lt; Cnt; i++) cntDis[vecBig[i]] = 0;
+    for (auto &amp;to : G[cur]) {
+        if (vis[to]) continue;
+        cnt = 0, dis[to] = w[to], getDis(to, cur);
+        for (int i = 0; i &lt; cnt; i++) cntDis[vec[i].first + ADD]--;
+        for (int i = cnt - 1; i &gt;= 0; i--) {
+            int d = vec[i].first, node = vec[i].second;
+            add[node] += cntDis[-1 - w[cur] - d + ADD] + cntDis[-2 - w[cur] - d + ADD];
+            if (d + w[cur] == -1 || d + w[cur] == -2) add[node]++;
+            add[father[node]] += add[node];
+            res[node] += add[node];
+        }
+        for (int i = 0; i &lt; cnt; i++) cntDis[vec[i].first + ADD]++;
+    }
+    for (int i = 0; i &lt; Cnt; i++) cntDis[vecBig[i].first + ADD] = 0;
 }
 inline void dfs(int cur) {
     vis[cur] = true, calc(cur);
@@ -170,14 +215,19 @@ inline void dfs(int cur) {
     }
 }
 int main() {
-    read(n), read(k);
+    read(n), read(x);
     for (int i = 1, u, v; i &lt; n; i++) {
         read(u), read(v);
         G[u].emplace_back(v), G[v].emplace_back(u);
     }
+    for (int i = 1, tmp; i &lt;= n; i++)
+        read(tmp), w[i] = tmp &gt;= x ? 1 : -1;
     root = 0, tot = dp[root] = n;
     getRoot(1, root), dfs(root);
-    cout &lt;&lt; res &lt;&lt; endl;
+    long long mx = 0;
+    for (int i = 1; i &lt;= n; i++) 
+        if (w[i] == -1) mx = max(mx, res[i]);
+    cout &lt;&lt; mx &lt;&lt; endl;
     return 0;
 }
 </code></pre>
@@ -193,9 +243,9 @@ int main() {
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://shaun118294191.github.io/post/p3806-mo-ban-dian-fen-zhi-1/">
+            <a href="https://shaun118294191.github.io/post/cf161d-distance-in-tree/">
               <h3 class="post-title">
-                P3806 【模板】点分治1
+                CF161D Distance in Tree
               </h3>
             </a>
           </div>
