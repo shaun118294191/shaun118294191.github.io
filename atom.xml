@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-15T06:46:42.844Z</updated>
+    <updated>2020-03-15T13:36:03.276Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,91 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[P2634 [国家集训队]聪聪可可]]></title>
+        <id>https://shaun118294191.github.io/post/p2634-guo-jia-ji-xun-dui-cong-cong-ke-ke/</id>
+        <link href="https://shaun118294191.github.io/post/p2634-guo-jia-ji-xun-dui-cong-cong-ke-ke/">
+        </link>
+        <updated>2020-03-15T13:34:45.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P2634">题目链接</a></p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 2e4 + 4;
+//长度 mod 3 = 0的点对数
+using namespace std;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+using A = int [MAXN];
+A dp, sz, cntDis, vis, dis, vec, vecBig;
+vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
+int n, root, tot, res, cnt;
+inline void getRoot(int cur, int fa) {
+    sz[cur] = 1, dp[cur] = 0;
+    for (auto &amp;e : G[cur]) {
+        int to = e.first;
+        if (vis[to] || fa == to) continue;
+        getRoot(to, cur);
+        sz[cur] += sz[to];
+        dp[cur] = max(dp[cur], sz[to]);
+    }
+    dp[cur] = max(dp[cur], tot - sz[cur]);
+    if (dp[cur] &lt; dp[root]) root = cur;
+}
+inline void getDis(int cur, int fa) {
+    vec[cnt++] = dis[cur];
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (vis[to] || fa == to) continue;
+        dis[to] = (dis[cur] + w) % 3;
+        getDis(to, cur);
+    }
+}
+inline void calc(int cur) { //长度 mod 3 = 0的路径数
+    int Cnt(0);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first, w = e.second;
+        if (vis[to]) continue;
+        cnt = 0, dis[to] = w % 3, getDis(to, cur);
+        for (int i = 0; i &lt; cnt; ++i) {
+            res += cntDis[(3 - vec[i]) % 3];
+            if (vec[i] % 3 == 0) ++res; //根为端点
+        }
+        for (int i = 0; i &lt; cnt; ++i)
+            vecBig[Cnt++] = vec[i], ++cntDis[vec[i]];
+    }
+    for (int i = 0; i &lt; Cnt; ++i) cntDis[vecBig[i]] = 0;
+}
+inline void dfs(int cur) {
+    vis[cur] = true, calc(cur);
+    for (auto &amp;e : G[cur]) {
+        int to = e.first;
+        if (vis[to]) continue;
+        root = cur, tot = dp[root] = sz[to];
+        getRoot(to, root), dfs(root);
+    }
+}
+int main() {
+    freopen(&quot;test.in&quot;, &quot;r&quot;, stdin);
+    read(n);
+    for (int i = 1, u, v, w; i &lt; n; ++i) {
+        read(u), read(v), read(w);
+        G[u].emplace_back(make_pair(v, w));
+        G[v].emplace_back(make_pair(u, w));
+    }
+    root = 0, tot = dp[root] = n;
+    getRoot(1, root), dfs(root);
+    res = res * 2 + n;
+    int tmp = __gcd(res, n * n);
+    cout &lt;&lt; res / tmp &lt;&lt; &quot;/&quot; &lt;&lt; n * n / tmp&lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Rebuild Teldrassil]]></title>
         <id>https://shaun118294191.github.io/post/rebuild-teldrassil/</id>
@@ -1173,74 +1258,6 @@ int main(){
 		int lca = LCA(u[i], v[i], 0);
 		printf(&quot;%lld\n&quot;, sum - lca + w[i]);
 	}
-	return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[P2893 [USACO08FEB]Making the Grade G]]></title>
-        <id>https://shaun118294191.github.io/post/p2893-usaco08febmaking-the-grade-g/</id>
-        <link href="https://shaun118294191.github.io/post/p2893-usaco08febmaking-the-grade-g/">
-        </link>
-        <updated>2020-03-06T06:33:43.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P2893">题目链接</a><br>
-农夫约翰想改造一条路，原来的路的每一段海拔是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，修理后是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>，花费|<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> – <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>|。要求修好的路是单调不升或者单调不降的。求最小花费。</p>
-<p>数学归纳分类讨论可得选择的<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">B_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>一定在<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>中出现。</p>
-<p>于是可将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">A</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>离散化，用dp[i][j]表示修改第i条路，<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>M</mi><mi>a</mi><mi>p</mi><mo>[</mo><msub><mi>B</mi><mi>i</mi></msub><mo>]</mo><mo>=</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">Map[B_i] = j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mord mathdefault">a</span><span class="mord mathdefault">p</span><span class="mopen">[</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.05017em;">B</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.05017em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>的最小值。</p>
-<pre><code class="language-cpp">	for (int i = 1; i &lt;= n; i++) 
-		for (int j = 1; j &lt;= cnt; j++)
-			for (int k = 1; k &lt;= j; k++) 
-				dp[i][j] = min(dp[i][j], dp[i - 1][k] + abs(a[i] - cpy[j]);
-</code></pre>
-<p>可以发现对于<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>i</mi><mo separator="true">,</mo><mi>j</mi></mrow><annotation encoding="application/x-tex">i, j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.05724em;">j</span></span></span></span>，决策集合只增不少, 不需要每次都求dp[i - 1][k]，可在j++时保存下来。</p>
-<pre><code class="language-cpp">	for (int i = 1; i &lt;= n; i++) {
-		int val = 0x3f3f3f3f3f3f3f3f;
-		for (int j = 1; j &lt;= cnt; j++) {
-			val = min(val, dp[i - 1][j]);
-			dp[i][j] = val + abs(a[i] - cpy[j]);	
-		}
-	}	
-</code></pre>
-<p>Code(没求递减序列但是过了?):</p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-#define int long long
-constexpr int MAXN = 2e3 + 3;
-constexpr int Inf = 2e9;
-using namespace std;
-template &lt;typename T&gt; inline void read(T &amp;x) {
-    int f = 1; x = 0; 
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-unordered_map&lt;int, int&gt;Map;
-int n, a[MAXN], cpy[MAXN], cnt, dp[MAXN][MAXN];
-inline void discretizaton() {
-	sort(cpy + 1, cpy + n + 1);
-	cnt = unique(cpy + 1, cpy + n + 1) - cpy - 1;
-	for (int i = 1; i &lt;= cnt; i++) Map[cpy[i]] = i;
-}
-signed main(){
-	read(n);
-	for (int i = 1; i &lt;= n; i++) read(a[i]), cpy[i] = a[i];
-	discretizaton();
-	memset(dp, 0x3f, sizeof(dp));
-	for (int i = 1; i &lt;= cnt; i++) dp[0][i] = 0;
-	// for (int i = 1; i &lt;= n; i++) 
-	// 	for (int j = 1; j &lt;= cnt; j++)
-	// 		for (int k = 1; k &lt;= j; k++) {
-	// 			dp[i][j] = min(dp[i][j], dp[i - 1][k] + abs(a[i] - cpy[j]));
-	// 		}
-	for (int i = 1; i &lt;= n; i++) {
-		int val = 0x3f3f3f3f3f3f3f3f;
-		for (int j = 1; j &lt;= cnt; j++) {
-			val = min(val, dp[i - 1][j]);
-			dp[i][j] = val + abs(a[i] - cpy[j]);	
-		}
-	}	
-	cout &lt;&lt; *min_element(dp[n] + 1, dp[n] + cnt + 1) &lt;&lt; endl;
 	return 0;
 }
 </code></pre>
