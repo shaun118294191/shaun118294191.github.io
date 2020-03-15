@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-15T06:24:44.976Z</updated>
+    <updated>2020-03-15T06:46:42.844Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -48,7 +48,7 @@ dfs:</p>
             vecBig[Cnt++] = vec[i], cntDis[vec[i].first + ADD]++; //保存已访问子树的结果
     }
 </code></pre>
-<p>再次遍历子树，减去cntDis, 求出add[], 再将cntDis加回。<br>
+<p>再次遍历子树，减去cntDis, 求出add[], 再将cntDis加回。若node到根节点点权和(不过括w[root])为d，则add[node] += cntDis[-1 - d - w[root]] + cntDis[-2 - d - w[root]] + 到根节点距离为-1 or-2的路径数。<br>
 calc:</p>
 <pre><code class="language-cpp">    for (int i = 0; i &lt; cnt; i++) cntDis[vec[i].first + ADD]--;
     for (int i = cnt - 1; i &gt;= 0; i--) {
