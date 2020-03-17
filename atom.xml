@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-17T03:24:02.405Z</updated>
+    <updated>2020-03-17T06:51:26.097Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,144 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[CF1070C Cloud Computing]]></title>
+        <id>https://shaun118294191.github.io/post/cf1070c-cloud-computing/</id>
+        <link href="https://shaun118294191.github.io/post/cf1070c-cloud-computing/">
+        </link>
+        <updated>2020-03-17T06:35:08.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/CF1070C">题目链接</a></p>
+<p>Buber公司决定连续 n 天云端租用 CPU ，每天需要 k 个 CPU</p>
+<p>云端供应商提供 m 个租用计划，第 i 个计划有如下的特征：</p>
+<ul>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>l</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">l_i, r_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.01968em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示第 i 个计划从 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>l</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">l_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.84444em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.01968em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 天开始到 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>r</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">r_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.02778em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 天结束。</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>c</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">c_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示第 i 个计划中每天最多租用CPU个数</li>
+<li><span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>p</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">p_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault">p</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> 表示第i 个计划租用一个CPU的花费。</li>
+</ul>
+<p>Buber 可以同时使用多个计划，即他可以在第 x 天在每个进行中的计划中租用 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>0</mn><mo separator="true">,</mo><msub><mi>c</mi><mi>i</mi></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">[0,c_i]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">0</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault">c</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span> 个 CPU。<br>
+求最少花费。</p>
+<p>每一天每个计划中CPU个数可以任意选，因此应优先选费用低的计划，经行区间修改。</p>
+<pre><code class="language-cpp">struct node {
+    int l, r, c, p;
+    inline bool operator &lt; (const node &amp;other) const {
+        return p &lt; other.p;
+    }
+}tariff[MAXN];
+</code></pre>
+<p>用 max 记录节点维护的区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo>−</mo><mo>&gt;</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mi>o</mi><mi>o</mi><mi>t</mi><mo>−</mo><mo>&gt;</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[root-&gt;l, root-&gt;r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">o</span><span class="mord mathdefault">o</span><span class="mord mathdefault">t</span><span class="mord">−</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">&gt;</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>中已购买CPU数的最大值，min 记录最小值:</p>
+<ul>
+<li>若 min &gt;= k，则直接 return。</li>
+<li>否则若 max + c &lt;= k, 则区间增值c。</li>
+<li>否则若 max == min, 则区间增值min(c, k - max)。</li>
+<li>否则递归左右儿子修改。</li>
+</ul>
+<pre><code class="language-cpp">inline void change(int qL, int qR, int L, int R, Node root) {
+    if (qL &lt;= L &amp;&amp; R &lt;= qR) {
+        if (root-&gt;min &gt;= k) return;
+        if (root-&gt;max + curC &lt;= k) {
+            root-&gt;max += curC, root-&gt;min += curC, root-&gt;tag += curC;
+            res += curC * curP * (R - L + 1);
+            return;
+        } else if (root-&gt;max == root-&gt;min){
+            LL delta = min(curC, k - root-&gt;max);
+            root-&gt;max += delta, root-&gt;min += delta, root-&gt;tag += delta;
+            res += delta * curP * (R - L + 1);
+            return;
+        }
+        if (L == R) return;
+    }
+    pushTag(L, R, root);
+    int mid = (L + R) &gt;&gt; 1;
+    if (qL &lt;= mid) change(qL, qR, L, mid, Lson);
+    if (qR &gt; mid) change(qL, qR, mid + 1, R, Rson);
+    update(root);
+}
+</code></pre>
+<p>Code:</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+//cloud computing
+constexpr int MAXN = 1e6 + 6;
+using namespace std;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+struct node {
+    int l, r, c, p;
+    inline bool operator &lt; (const node &amp;other) const {
+        return p &lt; other.p;
+    }
+}tariff[MAXN];
+using LL = long long;
+struct segTree {
+    segTree * lson, *rson;
+    LL max, min, tag;
+}Tree[MAXN &lt;&lt; 1];
+using Node = segTree *;
+#define Lson root-&gt;lson
+#define Rson root-&gt;rson
+int n, m, tot;
+LL k, res, curC, curP;
+inline void update(Node root) {
+    root-&gt;max = max(Lson-&gt;max, Rson-&gt;max);
+    root-&gt;min = min(Lson-&gt;min, Rson-&gt;min);
+}
+inline void build(int L, int R, Node root) {
+    if (L == R) return;
+    int mid = (L + R) &gt;&gt; 1;
+    Lson = &amp;Tree[++tot], Rson = &amp;Tree[++tot];
+    build(L, mid, Lson), build(mid + 1 ,R, Rson);
+}
+inline void pushTag(int L, int R, Node root) {
+    if (!root-&gt;tag) return;
+    Lson-&gt;tag += root-&gt;tag, Rson-&gt;tag += root-&gt;tag;
+    Lson-&gt;max += root-&gt;tag, Rson-&gt;max += root-&gt;tag;
+    Lson-&gt;min += root-&gt;tag, Rson-&gt;min += root-&gt;tag;
+    root-&gt;tag = 0;
+}
+inline void change(int qL, int qR, int L, int R, Node root) {
+    if (qL &lt;= L &amp;&amp; R &lt;= qR) {
+        if (root-&gt;min &gt;= k) return;
+        if (root-&gt;max + curC &lt;= k) {
+            root-&gt;max += curC, root-&gt;min += curC, root-&gt;tag += curC;
+            res += curC * curP * (R - L + 1);
+            return;
+        } else if (root-&gt;max == root-&gt;min){
+            LL delta = min(curC, k - root-&gt;max);
+            root-&gt;max += delta, root-&gt;min += delta, root-&gt;tag += delta;
+            res += delta * curP * (R - L + 1);
+            return;
+        }
+        if (L == R) return;
+    }
+    pushTag(L, R, root);
+    int mid = (L + R) &gt;&gt; 1;
+    if (qL &lt;= mid) change(qL, qR, L, mid, Lson);
+    if (qR &gt; mid) change(qL, qR, mid + 1, R, Rson);
+    update(root);
+}
+int main() {
+    read(n), read(k), read(m);
+    for (int i = 1; i &lt;= m; i++) {
+        read(tariff[i].l), read(tariff[i].r);
+        read(tariff[i].c), read(tariff[i].p);
+    }
+    sort(tariff + 1, tariff + m + 1);
+    build(1, n, Tree);
+    for (int i = 1; i &lt;= m; i++) {
+        curC = tariff[i].c, curP = tariff[i].p;
+        int l = tariff[i].l, r = tariff[i].r;
+        change(l, r, 1, n, Tree);
+    }
+    cout &lt;&lt; res &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[P4556 [Vani有约会]雨天的尾巴]]></title>
         <id>https://shaun118294191.github.io/post/p4556-vani-you-yue-hui-yu-tian-de-wei-ba/</id>
@@ -1163,146 +1301,6 @@ int main() {
         }
     }
     cout &lt;&lt; mi &lt;&lt; &quot; &quot; &lt;&lt; mx;
-    return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[[NOI2004]郁闷的出纳员]]></title>
-        <id>https://shaun118294191.github.io/post/noi2004yu-men-de-chu-na-yuan/</id>
-        <link href="https://shaun118294191.github.io/post/noi2004yu-men-de-chu-na-yuan/">
-        </link>
-        <updated>2020-03-09T13:17:48.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P1486">题目链接</a><br>
-n 表示有多少条命令，min 表示工资下界。<br>
-I k 新建一个工资档案，初始工资为 k。如果某员工的初始工资低于工资下界，他将立刻离开公司(不计入答案)。</p>
-<p>A k 把每位员工的工资加上 k 。</p>
-<p>S k 把每位员工的工资扣除 k(所有工资低于min的员工会立刻离开公司)。</p>
-<p>F k 查询第 k 多的工资</p>
-<p>fhq-Treap维护区间信息即可。</p>
-<p>命令I :</p>
-<pre><code class="language-cpp">inline void insert(Node &amp;root, LL key) {
-    if (key &lt; Min) return;
-    Node L = NULL, R = NULL, tmp = NULL;
-    newNode(tmp, key);
-    split(root, L, R, key);
-    merge(L, L, tmp), merge(root, L, R);
-}
-</code></pre>
-<p>命令A(给root打上标记) :</p>
-<pre><code class="language-cpp">root-&gt;key += k, root-&gt;tag += k;
-</code></pre>
-<p>命令S :</p>
-<pre><code class="language-cpp">root-&gt;key -= k, root-&gt;tag -= k;
-remove(root, Min);
-</code></pre>
-<p>remove函数把key &lt; min的节点分到左二子，令root = R即可</p>
-<pre><code class="language-cpp">inline void remove(Node &amp;root, LL key) {
-    Node L = NULL, R = NULL, tmp = NULL;
-    split(root, L, R, key - 1);
-    leave += L ? L-&gt;size : 0;
-    merge(root, tmp, R);
-}
-</code></pre>
-<p>命令F (第k大 根据右儿子大小判断):</p>
-<pre><code class="language-cpp">inline LL getKth(Node root, int rank) {
-    if (root == NULL) return -1;
-    pushTag(root);
-    int Rsize = Rson ? Rson-&gt;size : 0;
-    if (Rsize &gt;= rank) return getKth(Rson, rank);
-    if (Rsize + 1 == rank) return root-&gt;key; 
-    return getKth(Lson, rank - Rsize - 1);
-}
-</code></pre>
-<p>Code:</p>
-<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
-constexpr int MAXN = 2e5 + 5;
-using namespace std;
-using LL = long long;
-template &lt;typename T&gt;
-inline void read(T &amp;x) {
-    int f = 1; x = 0;
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-struct Treap {
-    Treap *lson, *rson;
-    LL key; 
-    int size, priority, tag;
-}Tree[MAXN], *root;
-using Node = Treap*;
-#define Lson root-&gt;lson
-#define Rson root-&gt;rson
-int n, tot, leave, Min;
-inline void newNode(Node &amp;root, int key) {
-    root = &amp;Tree[++tot], root-&gt;size = 1;
-    root-&gt;key = key, root-&gt;priority = rand();
-}
-inline void update(Node root) {
-    int Lsize = Lson ? Lson-&gt;size : 0, Rsize = Rson ? Rson-&gt;size : 0;
-    root-&gt;size = Lsize + Rsize + 1;
-}
-inline void pushTag(Node root) {
-    if (!root-&gt;tag) return;
-    if (Lson) Lson-&gt;tag += root-&gt;tag, Lson-&gt;key += root-&gt;tag;
-    if (Rson) Rson-&gt;tag += root-&gt;tag, Rson-&gt;key += root-&gt;tag;
-    root-&gt;tag = 0;
-}
-inline void split(Node root, Node &amp;L, Node &amp;R, LL key) {
-    if (root == NULL) {
-        L = R = NULL;
-        return;
-    }
-    pushTag(root);
-    if (root-&gt;key &lt;= key) L = root, split(Rson, Rson, R, key);
-    else R = root, split(Lson, L, Lson, key);
-    update(root);
-}
-inline void merge(Node &amp;root, Node L, Node R) {
-    if (L == NULL) {root = R; return;}
-    if (R == NULL) {root = L; return;}
-    if (L-&gt;priority &lt; R-&gt;priority) pushTag(root = L), merge(Rson, Rson, R);
-    else pushTag(root = R), merge(Lson, L, Lson);
-    update(root);
-}
-inline LL getKth(Node root, int rank) {
-    if (root == NULL) return -1;
-    pushTag(root);
-    int Rsize = Rson ? Rson-&gt;size : 0;
-    if (Rsize &gt;= rank) return getKth(Rson, rank);
-    if (Rsize + 1 == rank) return root-&gt;key; 
-    return getKth(Lson, rank - Rsize - 1);
-}
-inline void insert(Node &amp;root, LL key) {
-    if (key &lt; Min) return;
-    Node L = NULL, R = NULL, tmp = NULL;
-    newNode(tmp, key);
-    split(root, L, R, key);
-    merge(L, L, tmp), merge(root, L, R);
-}
-inline void remove(Node &amp;root, LL key) {
-    Node L = NULL, R = NULL, tmp = NULL;
-    split(root, L, R, key - 1);
-    leave += L ? L-&gt;size : 0;
-    merge(root, tmp, R);
-}
-int main() {
-    read(n), read(Min);
-    for (int i = 1; i &lt;= n; i++) {
-        char s; int k;
-        cin &gt;&gt; s; read(k);
-        if (s == 'I') insert(root, k); 
-        else if (s == 'A') root-&gt;key += k, root-&gt;tag += k;
-        else if (s == 'S') {
-            root-&gt;key -= k, root-&gt;tag -= k;
-            remove(root, Min);
-        }
-        else printf(&quot;%lld\n&quot;, getKth(root, k));
-    }
-    printf(&quot;%d\n&quot;, leave);
     return 0;
 }
 </code></pre>
