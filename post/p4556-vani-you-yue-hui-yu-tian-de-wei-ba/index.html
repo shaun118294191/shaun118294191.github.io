@@ -1,0 +1,320 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>P4556 [Vani有约会]雨天的尾巴 | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1584415379618">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="P4556 [Vani有约会]雨天的尾巴 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+树上差分两种形式：
+
+
+将(u,v)(u, v)(u,v)间的边覆盖， 将u点的权值加1，v点的权值加1，节点LCA(u, v)的权值减2。对树进行深度优先遍历，求出fxf_xfx​表示以xxx为根的子树中各节点的权值和。则fxf..." />
+    <meta name="keywords" content="线段树合并,树上差分" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1584415379618" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              P4556 [Vani有约会]雨天的尾巴
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-03-17
+              </span>
+              <span>
+                6 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="post-tag">
+                  # 线段树合并
+                </a>
+              
+                <a href="https://shaun118294191.github.io/tag/PXku6xzNr/" class="post-tag">
+                  # 树上差分
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/P4556">题目链接</a><br>
+树上差分两种形式：</p>
+<ul>
+<li>
+<p>将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>间的边覆盖， 将u点的权值加1，v点的权值加1，节点LCA(u, v)的权值减2。对树进行深度优先遍历，求出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">f_x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>为根的子树中各节点的权值和。则<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">f_x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>就是<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>与其父亲节点间的树边的覆盖次数。</p>
+</li>
+<li>
+<p>将<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>(</mo><mi>u</mi><mo separator="true">,</mo><mi>v</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">(u, v)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathdefault">u</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.03588em;">v</span><span class="mclose">)</span></span></span></span>路径上的点覆盖，将u点的权值加1，v点的权值加1，LCA(u, v)的权值减1，fa[LCA(u, v)]的点权值减1。对树进行深度优先遍历，求出<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>f</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">f_x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.10764em;">f</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.151392em;"><span style="top:-2.5500000000000003em;margin-left:-0.10764em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">x</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span>表示以<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>x</mi></mrow><annotation encoding="application/x-tex">x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathdefault">x</span></span></span></span>为根的子树中各节点的权值和。</p>
+</li>
+</ul>
+<p>对于本题，节点修改可用树上差分实现。对于出现次数最多的z以及z的数值，可对每个点建立动态开点的权值线段树并在最后深度优先遍历时合并。</p>
+<p>时间空间复杂度<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>O</mi><mo>(</mo><mo>(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo><mi>l</mi><mi>o</mi><msub><mi>g</mi><mn>2</mn></msub><mo>(</mo><mi>N</mi><mo>+</mo><mi>M</mi><mo>)</mo><mo>)</mo></mrow><annotation encoding="application/x-tex">O((N + M)log_2(N + M))</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">o</span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mopen">(</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">M</span><span class="mclose">)</span><span class="mclose">)</span></span></span></span>。</p>
+<p>为防止左右儿子为空，可将其指针默认为Tree[0]的地址。最后还是得开<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>N</mi><mo>∗</mo><mi>L</mi><mi>o</mi><mi>g</mi><mi>N</mi><mo>∗</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">N * LogN * 4</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">L</span><span class="mord mathdefault">o</span><span class="mord mathdefault" style="margin-right:0.03588em;">g</span><span class="mord mathdefault" style="margin-right:0.10903em;">N</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">4</span></span></span></span>的空间……</p>
+<p>动态插入：</p>
+<pre><code class="language-cpp">inline Node * newNode(Node * &amp;root) { 
+	if (root == NULL || root == Tree) root = &amp;Tree[++tot], Lson = Rson = Tree;
+	return root;
+}
+inline void insert(Node *root, int L, int R, int val, int delta) {
+	if (L == R) {
+		root-&gt;cnt += delta;
+		root-&gt;pos = root-&gt;cnt ? L : 0;
+		return;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	if (val &lt;= mid) insert(newNode(Lson), L, mid, val, delta);
+	else insert(newNode(Rson), mid + 1, R, val, delta);
+	update(root);
+}
+</code></pre>
+<p>合并：</p>
+<pre><code class="language-cpp">inline Node * merge(Node *root, Node *pre, int L, int R) {
+	if (root == NULL || root == Tree) return pre;
+	if (pre == NULL || pre == Tree) return root;
+	if (L == R) {
+		root-&gt;cnt += pre-&gt;cnt;
+		root-&gt;pos = root-&gt;cnt ? L : 0;
+		return root;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	Lson = merge(Lson, pre-&gt;lson, L, mid);
+	Rson = merge(Rson, pre-&gt;rson, mid + 1, R);
+	update(root);
+	return root;
+}
+</code></pre>
+<p>Code:</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 1e5 + 5;
+constexpr int LOG = 18;
+using namespace std;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0; 
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+struct Node {
+	Node *lson, *rson;
+	int cnt, pos;
+}Tree[MAXN * LOG * 4], *root[MAXN];
+#define Lson root-&gt;lson
+#define Rson root-&gt;rson
+vector&lt;vector&lt;int&gt; &gt; G;
+int tot, n, m, f[MAXN][LOG], depth[MAXN], ans[MAXN];
+inline Node * newNode(Node * &amp;root) { 
+	if (root == NULL || root == Tree) root = &amp;Tree[++tot], Lson = Rson = Tree;
+	return root;
+}
+inline void update(Node *root) {
+	root-&gt;cnt = max(Lson-&gt;cnt, Rson-&gt;cnt);
+	root-&gt;pos = (Lson-&gt;cnt &gt;= Rson-&gt;cnt) ? Lson-&gt;pos : Rson-&gt;pos;
+}
+inline void insert(Node *root, int L, int R, int val, int delta) {
+	if (L == R) {
+		root-&gt;cnt += delta;
+		root-&gt;pos = root-&gt;cnt ? L : 0;
+		return;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	if (val &lt;= mid) insert(newNode(Lson), L, mid, val, delta);
+	else insert(newNode(Rson), mid + 1, R, val, delta);
+	update(root);
+}
+inline Node * merge(Node *root, Node *pre, int L, int R) {
+	if (root == NULL || root == Tree) return pre;
+	if (pre == NULL || pre == Tree) return root;
+	if (L == R) {
+		root-&gt;cnt += pre-&gt;cnt;
+		root-&gt;pos = root-&gt;cnt ? L : 0;
+		return root;
+	}
+	int mid = (L + R) &gt;&gt; 1;
+	Lson = merge(Lson, pre-&gt;lson, L, mid);
+	Rson = merge(Rson, pre-&gt;rson, mid + 1, R);
+	update(root);
+	return root;
+}
+inline void dfs(int cur, int fa) {
+	depth[cur] = depth[fa] + 1, f[cur][0] = fa;
+	for (int i = 1; i &lt; LOG; i++) f[cur][i] = f[f[cur][i - 1]][i - 1];
+	for (auto to : G[cur]) {
+		if (to == fa) continue;
+		dfs(to, cur);
+	}
+}
+inline void dfs2(int cur, int fa) {
+	for (auto to : G[cur]) {
+		if (to == fa) continue;
+		dfs2(to, cur);
+		root[cur] = merge(root[cur], root[to], 1, MAXN - 5);
+	}
+	ans[cur] = root[cur]-&gt;pos;
+}
+inline int LCA(int u, int v) {
+	if (depth[u] &lt; depth[v]) swap(u, v);
+	for (int i = LOG - 1; i &gt;= 0; i--)
+		if (depth[f[u][i]] &gt;= depth[v]) u = f[u][i];
+	if (u == v) return u;
+	for (int i = LOG - 1; i &gt;= 0; i--)
+		if (f[u][i] != f[v][i]) u = f[u][i], v = f[v][i];
+	return f[u][0];
+}
+int main(){
+	read(n), read(m), G.resize(n + 1);
+	for (int i = 1, u, v; i &lt; n; i++) {
+		read(u), read(v);
+		G[u].push_back(v), G[v].push_back(u); 
+	}
+	for (int i = 0; i &lt;= n; i++) newNode(root[i]);
+	dfs(1, 0); //建立有根树，LCA预处理
+	for (int i = 1, u, v, z, lca; i &lt;= m; i++) {
+		read(u), read(v), read(z), lca = LCA(u, v); //差分操作
+		insert(root[u], 1, MAXN - 5, z, 1);
+		insert(root[v], 1, MAXN - 5, z, 1);
+		insert(root[lca], 1, MAXN - 5, z, -1);
+		insert(root[f[lca][0]], 1, MAXN - 5, z, -1);
+	}
+	dfs2(1, 0); //遍历并合并线段树
+	for (int i = 1; i &lt;= n; i++) printf(&quot;%d\n&quot;, ans[i]);
+	return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/p2634-guo-jia-ji-xun-dui-cong-cong-ke-ke/">
+              <h3 class="post-title">
+                P2634 [国家集训队]聪聪可可
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
