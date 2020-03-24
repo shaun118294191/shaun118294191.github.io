@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>P4735 最大异或和 | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1584863046481">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1585016156847">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="P4735 最大异或和 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
@@ -12,12 +12,7 @@
 
 
     <meta name="description" content="题目链接
-留坑
-#include &lt;bits/stdc++.h&gt;
-constexpr int MAXN = 3e5 + 5;
-constexpr int BIT = 24;
-using namespace std;
-templa..." />
+先求出异或前缀和 preXor[i], 则询问操作变为 preXor[p - 1] ^ preXor[N] ^ x，即求一个位置 l−1≤P≤r−1l - 1 \le P \le r - 1l−1≤P≤r−1 使得 preXor[..." />
     <meta name="keywords" content="可持久化trie" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -27,7 +22,7 @@ templa..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1584863046481" alt="">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1585016156847" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -87,7 +82,7 @@ templa..." />
                 2020-03-22
               </span>
               <span>
-                3 min read
+                4 min read
               </span>
               
                 <a href="https://shaun118294191.github.io/tag/BGymz65ZM/" class="post-tag">
@@ -99,7 +94,36 @@ templa..." />
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p><a href="https://www.luogu.com.cn/problem/P4735">题目链接</a><br>
-留坑</p>
+先求出异或前缀和 preXor[i], 则询问操作变为 preXor[p - 1] ^ preXor[N] ^ x，即求一个位置 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo>−</mo><mn>1</mn><mo>≤</mo><mi>P</mi><mo>≤</mo><mi>r</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">l - 1 \le P \le r - 1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.78041em;vertical-align:-0.13597em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.8193em;vertical-align:-0.13597em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span> 使得 preXor[P] ^ (preXor[N] ^ x)。</p>
+<p>可以以在插入时间 $ l - 1 \le lst \le r - 1$ 的trie树节点中优先查找与 (preXor[N] ^ x) 相反的指针即可。</p>
+<p>可持久化trie树插入（类似可持久化线段树）：</p>
+<pre><code class="language-cpp">inline Node newNode(Node &amp;root) {
+    static int nptr;
+    return root = &amp;Tree[++nptr];
+}
+inline void insert(Node pre, Node root, int x, int Index) {
+    for (int i = BIT - 1, tmp; ~i; i--) {
+        tmp = (x &gt;&gt; i) &amp; 1;
+        if (pre) root-&gt;son[tmp ^ 1] = pre-&gt;son[tmp ^ 1];
+        root-&gt;lst = max(root-&gt;lst, Index);
+        root = newNode(root-&gt;son[tmp]), pre = pre ? pre-&gt;son[tmp] : NULL;
+    }
+    root-&gt;lst = max(root-&gt;lst, Index);
+}
+</code></pre>
+<p>查找操作：</p>
+<pre><code class="language-cpp">inline int search(Node root, int x, int limit) {
+    int res = 0;
+    for (int i = BIT - 1, tmp; ~i; i--) {
+        tmp = (x &gt;&gt; i) &amp; 1;
+        if (root-&gt;son[tmp ^ 1] &amp;&amp; root-&gt;son[tmp ^ 1]-&gt;lst &gt;= limit) 
+            root = root-&gt;son[tmp ^ 1];
+        else root = root-&gt;son[tmp]; 
+    }
+    return preXor[root-&gt;lst] ^ x;
+}
+</code></pre>
+<p>Code:</p>
 <pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 constexpr int MAXN = 3e5 + 5;
 constexpr int BIT = 24;
