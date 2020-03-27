@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-27T12:04:11.889Z</updated>
+    <updated>2020-03-27T12:08:04.761Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -18,7 +18,7 @@
         <updated>2020-03-27T11:45:05.000Z</updated>
         <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/CF600E">题目链接</a></p>
 <p>一棵树有n个结点，每个结点都是一种颜色，每个颜色有一个编号，求树中每个子树的最多的颜色编号的和。</p>
-<p><a href="https://codeforces.ml/blog/entry/44351">dsu on tree</a></p>
+<p><a href="https://codeforces.ml/blog/entry/44351">Dsu on tree</a></p>
 <pre><code class="language-cpp">inline void Init(int cur, int fa) {
     father[cur] = fa, son[cur] = 0, sz[cur] = 1;
     for (auto &amp;to : G[cur]) {
