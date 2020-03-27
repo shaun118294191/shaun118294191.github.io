@@ -3,7 +3,7 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>SP2059 CERC07S - Robotic Sort | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1585020871507">
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1585309116182">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
 <link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
 <link rel="alternate" type="application/atom+xml" title="SP2059 CERC07S - Robotic Sort | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
@@ -12,12 +12,7 @@
 
 
     <meta name="description" content="题目链接
-跟新中
-Code:
-#include &lt;bits/stdc++.h&gt;
-constexpr int MAXN = 1e5 + 5;
-constexpr int Inf = 1e9;
-using namespace std..." />
+找到第一低物品的位置 P1P_1P1​ , 并将 [1,P1][1, P_1][1,P1​] 的区间翻转；找到第二低物品的位置 P2P_2P2​ , 并将 [2,P2][2, P_2][2,P2​] 的区间反转……最终所有的物品都..." />
     <meta name="keywords" content="平衡树" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
     <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
@@ -27,7 +22,7 @@ using namespace std..." />
       <div class="main-content">
         <div class="site-header">
   <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1585020871507" alt="">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1585309116182" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -87,7 +82,7 @@ using namespace std..." />
                 2020-03-20
               </span>
               <span>
-                4 min read
+                5 min read
               </span>
               
                 <a href="https://shaun118294191.github.io/tag/Rju-OW_g2/" class="post-tag">
@@ -99,8 +94,28 @@ using namespace std..." />
             <div class="post-content-wrapper">
               <div class="post-content">
                 <p><a href="https://www.luogu.com.cn/problem/SP2059">题目链接</a><br>
-跟新中<br>
-Code:</p>
+找到第一低物品的位置 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mn>1</mn></msub></mrow><annotation encoding="application/x-tex">P_1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> , 并将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>1</mn><mo separator="true">,</mo><msub><mi>P</mi><mn>1</mn></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">[1, P_1]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span> 的区间翻转；找到第二低物品的位置 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">P_2</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> , 并将 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mn>2</mn><mo separator="true">,</mo><msub><mi>P</mi><mn>2</mn></msub><mo>]</mo></mrow><annotation encoding="application/x-tex">[2, P_2]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.30110799999999993em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mclose">]</span></span></span></span> 的区间反转……最终所有的物品都会被排好序。 对于每次排序，输出 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">P_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> (需要注意的是，如果有高度相同的物品，必须保证排序后它们的相对位置关系与初始时相同)。</p>
+<p>思路：<br>
+平衡树求区间最小值，最小值的排名，以及区间翻转。</p>
+<p>fhq-Treap实现：每次求出 root-&gt;min, 并求出 root-&gt;min 是第pos小，那么 <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>P</mi><mi>i</mi></msub><mo>=</mo><mi>i</mi><mo>−</mo><mn>1</mn><mo>+</mo><mi>p</mi><mi>o</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">P_i = i - 1 + pos</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83333em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.13889em;">P</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.13889em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.74285em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.19444em;"></span><span class="mord mathdefault">p</span><span class="mord mathdefault">o</span><span class="mord mathdefault">s</span></span></span></span>; 再通过split 将该位置分出(不merge回原树); 再打上翻转标记即可。</p>
+<pre><code class="language-cpp">for (int i = 1; i &lt;= n; i++) {
+    Node L = NULL, tmp = NULL, R = NULL;
+    int pos = getPos(root, root-&gt;min);
+    i == n ? printf(&quot;%d\n&quot;, pos + i - 1) : printf(&quot;%d &quot;, pos + i - 1);
+    split(root, L, R, pos - 1), split(R, tmp, R, 1);
+    if (L) L-&gt;tag ^= 1;
+    merge(root, L, R);
+}
+</code></pre>
+<p>注意如果有相同的高度，区间翻转会改变相对位置，故可通过类似离散化的方式，通过pair&lt;val, i&gt;排序得出相对大小(优先按first key排序，first key相同则按second key排序)。</p>
+<pre><code class="language-cpp">for (int i = 1, val; i &lt;= n; i++) 
+    read(val), vec[i] = make_pair(val, i);
+sort(vec + 1, vec + n + 1);
+for (int i = 1; i &lt;= n; i++) vec[vec[i].second].first = i; //类似离散化
+for (int i = 1; i &lt;= n; i++)
+    newNode(tmp, vec[i].first), merge(root, root, tmp);
+</code></pre>
+<p>Code:</p>
 <pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
 constexpr int MAXN = 1e5 + 5;
 constexpr int Inf = 1e9;
