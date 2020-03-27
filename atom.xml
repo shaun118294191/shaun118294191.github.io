@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-03-27T12:08:04.761Z</updated>
+    <updated>2020-03-27T12:41:45.925Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -10,6 +10,122 @@
     <logo>https://shaun118294191.github.io/images/avatar.png</logo>
     <icon>https://shaun118294191.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, Shaun</rights>
+    <entry>
+        <title type="html"><![CDATA[God J and Ancient Tree]]></title>
+        <id>https://shaun118294191.github.io/post/god-j-and-ancient-tree/</id>
+        <link href="https://shaun118294191.github.io/post/god-j-and-ancient-tree/">
+        </link>
+        <updated>2020-03-27T12:36:03.000Z</updated>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/T125991">题目链接</a></p>
+<p>In The World of Code, there are three gods who keep the world running, and God J is one of them. In the garden of God J, an ancient tree grows. This tree can be represented as an undirected graph with nn nodes and n-1 edges. Nodes are numbered through 1 to n, where node 1 is called the root. Node i has <span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>a</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">a_i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.58056em;vertical-align:-0.15em;"></span><span class="mord"><span class="mord mathdefault">a</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> mysterious points.</p>
+<p>As this ancient tree grows, God J is going to prone some parts of it. In particular, God J will choose two nodes x and y (probably the same). After that he will delete those nodes which are neither on the shortest path from the root to node x, nor on the shortest path from the root to node y. The remaining tree is &quot;Y&quot;-shaped, or even simpler. The final score is the bitwise xor sum of all mysterious points of the remaining nodes.</p>
+<p>Your job is to help God J choose the two nodes, in order to maximize the final score.</p>
+<p>Recall that the bitwise xor sum of a set of numbers a,b,c,… is a⊕b⊕c⊕…, where ⊕ stands for bitwise xor.</p>
+<p>In the first sample down below if you choose node 4 and 5 the red nodes will remain and you will get the final score up to 128⊕48⊕4⊕8=188.<br>
+<img src="https://shaun118294191.github.io/post-images/1585312803512.png" alt="" loading="lazy"></p>
+<p>跟新中...<br>
+Code:</p>
+<pre><code class="language-cpp">#include &lt;bits/stdc++.h&gt;
+using namespace std;
+
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1;
+    x = 0;
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+
+constexpr int MAXN = 1e5 + 5;
+constexpr int BIT = 31;
+struct Trie {
+    Trie *son[2];
+}Tree[MAXN * BIT &lt;&lt; 2], *root[MAXN];
+using A = int [MAXN];
+using Node = Trie *;
+int n, ans;
+A w, dis, sz, son, father;
+
+inline Node newNode(Node &amp;root) {
+    static int nptr;
+    return root ? root : root = &amp;Tree[++nptr];
+}
+
+inline void insert(Node root, int x) {
+    for (int i = BIT, tmp; ~i; i--) {
+        tmp = (x &gt;&gt; i) &amp; 1;
+        root = newNode(root-&gt;son[tmp]);
+    }
+}
+
+inline void merge(Node pre, Node &amp;root) {
+    if (root == NULL) {root = pre; return;}
+    if (pre == NULL) return;
+    merge(pre-&gt;son[0], root-&gt;son[0]);
+    merge(pre-&gt;son[1], root-&gt;son[1]);
+}
+
+inline void search(Node root, int x, int fa) {
+    int res = 0;
+    for (int i = BIT, tmp; ~i; i--) {
+        tmp = (x &gt;&gt; i) &amp; 1;
+        if (root-&gt;son[tmp ^ 1]) root = root-&gt;son[tmp ^ 1], res |= (1 &lt;&lt; i);
+        else root = root-&gt;son[tmp];
+    }
+    ans = max(ans, res);
+}
+
+vector&lt;int&gt; G[MAXN];
+inline void dfs(int cur, int fa) {
+    dis[cur] = (dis[fa] ^ w[cur]);
+    father[cur] = fa, sz[cur] = 1, son[cur] = 0;
+    for (auto &amp;to : G[cur]) {
+        if (fa == to) continue;
+        dfs(to, cur);
+        sz[cur] += sz[to];
+        if (!son[cur] || sz[son[cur]] &lt; sz[to]) son[cur] = to; //重儿子
+    }
+}
+
+inline void dfs3(int fa, int cur) {
+    search(root[fa], dis[cur] ^ dis[fa], fa);
+    for (auto &amp;to : G[cur]) {
+        if (to == father[cur]) continue;
+        dfs3(fa, to);
+    }
+    merge(root[cur], root[fa]);
+}
+
+inline void dfs2(int cur) {
+    for (auto &amp;to : G[cur]) {
+        if (to == father[cur]) continue;
+        if (son[cur] == to) dfs2(to), merge(root[to], root[cur]);
+    }
+    for (auto &amp;to : G[cur]) {
+        if (to == father[cur] || to == son[cur]) continue;
+        dfs3(cur, to);
+        dfs2(to);
+    }
+}
+
+int main() {
+    read(n);
+    for (int i = 1; i &lt;= n; i++) read(w[i]);
+    for (int i = 1, u, v; i &lt; n; i++) {
+        read(u), read(v);
+        G[u].emplace_back(v), G[v].emplace_back(u);
+    }
+    dfs(1, 0);
+    for (int i = 1; i &lt;= n; i++)
+        ans = max(ans, dis[i]), newNode(root[i]), insert(root[i], dis[i]);
+    dfs2(1);
+    cout &lt;&lt; ans &lt;&lt; endl;
+    return 0;
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[CF600E Lomsat gelral]]></title>
         <id>https://shaun118294191.github.io/post/cf600e-lomsat-gelral/</id>
@@ -1038,91 +1154,6 @@ int main(){
 	dfs2(1, 0); //遍历并合并线段树
 	for (int i = 1; i &lt;= n; i++) printf(&quot;%d\n&quot;, ans[i]);
 	return 0;
-}
-</code></pre>
-]]></content>
-    </entry>
-    <entry>
-        <title type="html"><![CDATA[P2634 [国家集训队]聪聪可可]]></title>
-        <id>https://shaun118294191.github.io/post/p2634-guo-jia-ji-xun-dui-cong-cong-ke-ke/</id>
-        <link href="https://shaun118294191.github.io/post/p2634-guo-jia-ji-xun-dui-cong-cong-ke-ke/">
-        </link>
-        <updated>2020-03-15T13:34:45.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P2634">题目链接</a></p>
-<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
-constexpr int MAXN = 2e4 + 4;
-//长度 mod 3 = 0的点对数
-using namespace std;
-template &lt;typename T&gt; inline void read(T &amp;x) {
-    int f = 1; x = 0;
-    char ch = getchar();
-    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
-    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
-    x *= f;
-}
-using A = int [MAXN];
-A dp, sz, cntDis, vis, dis, vec, vecBig;
-vector&lt; pair&lt;int, int&gt; &gt; G[MAXN];
-int n, root, tot, res, cnt;
-inline void getRoot(int cur, int fa) {
-    sz[cur] = 1, dp[cur] = 0;
-    for (auto &amp;e : G[cur]) {
-        int to = e.first;
-        if (vis[to] || fa == to) continue;
-        getRoot(to, cur);
-        sz[cur] += sz[to];
-        dp[cur] = max(dp[cur], sz[to]);
-    }
-    dp[cur] = max(dp[cur], tot - sz[cur]);
-    if (dp[cur] &lt; dp[root]) root = cur;
-}
-inline void getDis(int cur, int fa) {
-    vec[cnt++] = dis[cur];
-    for (auto &amp;e : G[cur]) {
-        int to = e.first, w = e.second;
-        if (vis[to] || fa == to) continue;
-        dis[to] = (dis[cur] + w) % 3;
-        getDis(to, cur);
-    }
-}
-inline void calc(int cur) { //长度 mod 3 = 0的路径数
-    int Cnt(0);
-    for (auto &amp;e : G[cur]) {
-        int to = e.first, w = e.second;
-        if (vis[to]) continue;
-        cnt = 0, dis[to] = w % 3, getDis(to, cur);
-        for (int i = 0; i &lt; cnt; ++i) {
-            res += cntDis[(3 - vec[i]) % 3];
-            if (vec[i] % 3 == 0) ++res; //根为端点
-        }
-        for (int i = 0; i &lt; cnt; ++i)
-            vecBig[Cnt++] = vec[i], ++cntDis[vec[i]];
-    }
-    for (int i = 0; i &lt; Cnt; ++i) cntDis[vecBig[i]] = 0;
-}
-inline void dfs(int cur) {
-    vis[cur] = true, calc(cur);
-    for (auto &amp;e : G[cur]) {
-        int to = e.first;
-        if (vis[to]) continue;
-        root = cur, tot = dp[root] = sz[to];
-        getRoot(to, root), dfs(root);
-    }
-}
-int main() {
-    freopen(&quot;test.in&quot;, &quot;r&quot;, stdin);
-    read(n);
-    for (int i = 1, u, v, w; i &lt; n; ++i) {
-        read(u), read(v), read(w);
-        G[u].emplace_back(make_pair(v, w));
-        G[v].emplace_back(make_pair(u, w));
-    }
-    root = 0, tot = dp[root] = n;
-    getRoot(1, root), dfs(root);
-    res = res * 2 + n;
-    int tmp = __gcd(res, n * n);
-    cout &lt;&lt; res / tmp &lt;&lt; &quot;/&quot; &lt;&lt; n * n / tmp&lt;&lt; endl;
-    return 0;
 }
 </code></pre>
 ]]></content>
