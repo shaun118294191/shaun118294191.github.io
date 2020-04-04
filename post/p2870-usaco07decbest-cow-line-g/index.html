@@ -1,0 +1,286 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>P2870 [USACO07DEC]Best Cow Line G | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1585990840389">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="P2870 [USACO07DEC]Best Cow Line G | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+给定长度为N的字符串SSS，构造一个长度为TTT使其字典序最小。
+TTT最初为空字符串，有以下操作：
+
+
+从S的头部删除一个字符，加到T的尾部
+
+
+从S的尾部删除一个字符，加到T的尾部
+
+
+贪心：比较S与reverse(S)的字典..." />
+    <meta name="keywords" content="hash" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1585990840389" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              P2870 [USACO07DEC]Best Cow Line G
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-01
+              </span>
+              <span>
+                4 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/nw9MeC1J6/" class="post-tag">
+                  # hash
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/P2870">题目链接</a><br>
+给定长度为N的字符串<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>S</mi></mrow><annotation encoding="application/x-tex">S</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.05764em;">S</span></span></span></span>，构造一个长度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>使其字典序最小。</p>
+<p><span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>T</mi></mrow><annotation encoding="application/x-tex">T</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.13889em;">T</span></span></span></span>最初为空字符串，有以下操作：</p>
+<ul>
+<li>
+<p>从S的头部删除一个字符，加到T的尾部</p>
+</li>
+<li>
+<p>从S的尾部删除一个字符，加到T的尾部</p>
+</li>
+</ul>
+<p>贪心：比较S与reverse(S)的字典序，如果S的字典序小则从S头部取出字符；否则从尾部取出。</p>
+<p>本题数据加强，逐位比较会被卡。需hash + 二分或倍增求出最长相同前缀子串，比较下一个位置的大小。</p>
+<p>注：字符串hash(%)不能直接用来比较字符串大小。</p>
+<p>二分子串长度：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 5e5 + 5;
+typedef unsigned long long uLL;
+constexpr uLL base = 13331;
+using namespace std;
+int n;
+uLL H1[MAXN], H2[MAXN], P[MAXN] = {1};
+char s[MAXN], revs[MAXN];
+string ans;
+inline void Init() {
+    for (int i = 1; i &lt;= n; i++) P[i] = P[i - 1] * base;
+    for (int i = 1; i &lt;= n; i++) H1[i] = H1[i - 1] * base + s[i] - 'A' + 1;
+    for (int i = 1; i &lt;= n; i++) H2[i] = H2[i - 1] * base + revs[i] - 'A' + 1;
+}
+inline uLL getHash(int l, int r, uLL * H) {
+    return H[r] - H[l - 1] * P[r - l + 1];
+}
+inline bool compare(int l, int r) {
+    int L = 0, R = r - l, len = -1;
+    while (L &lt;= R) {
+        int mid = (L + R) &gt;&gt; 1;
+        if (getHash(l, l + mid, H1) == getHash(n - r + 1, n - r + 1 + mid, H2)) 
+            len = mid, L = mid + 1;
+        else R = mid - 1;
+    }
+    return s[l + len + 1] &lt; s[r - len - 1];
+}
+int main(){
+    // freopen(&quot;test.in&quot;, &quot;r&quot;, stdin);
+    // freopen(&quot;test.out&quot;,&quot;w&quot;,stdout);
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++) 
+        getchar(), s[i] = getchar(), revs[n - i + 1] = s[i];
+    Init();
+    int l = 1, r = n;
+    while (l &lt;= r) {
+        if (compare(l, r)) ans += s[l], l++;
+        else ans += s[r], r--;
+    }
+    for (int i = 0; i &lt; n; i++) {
+        if (i &amp;&amp; i % 80 == 0) putchar('\n');
+        putchar(ans[i]);
+    }
+	return 0;
+}
+</code></pre>
+<p>倍增：</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+constexpr int MAXN = 5e5 + 5;
+typedef unsigned long long uLL;
+constexpr uLL base = 13331;
+using namespace std;
+int n;
+uLL H1[MAXN], H2[MAXN], P[MAXN] = {1};
+char s[MAXN], revs[MAXN];
+string ans;
+inline void Init() {
+    for (int i = 1; i &lt;= n; i++) P[i] = P[i - 1] * base;
+    for (int i = 1; i &lt;= n; i++) H1[i] = H1[i - 1] * base + s[i] - 'A' + 1;
+    for (int i = 1; i &lt;= n; i++) H2[i] = H2[i - 1] * base + revs[i] - 'A' + 1;
+}
+inline uLL getHash(int l, int r, uLL * H) {
+    return H[r] - H[l - 1] * P[r - l + 1];
+}
+inline bool compare(int l, int r) {
+    int len = 1, Lst = l - 1, Rst = n - r;
+    while (len) {
+		if (Lst + len &lt;= r &amp;&amp; getHash(l, Lst + len, H1) == getHash(n - r + 1, Rst + len, H2)) {
+			Lst += len, Rst += len, len &lt;&lt;= 1;
+		} else len &gt;&gt;= 1;
+	}
+    return s[Lst + 1] &lt; revs[Rst + 1];
+}
+int main(){
+    //freopen(&quot;test.in&quot;, &quot;r&quot;, stdin);
+    //freopen(&quot;test.out&quot;,&quot;w&quot;,stdout);
+    cin &gt;&gt; n;
+    for (int i = 1; i &lt;= n; i++) 
+        getchar(), s[i] = getchar(), revs[n - i + 1] = s[i];
+    Init();
+    int l = 1, r = n;
+    while (l &lt;= r) {
+        if (compare(l, r)) ans += s[l], l++;
+        else ans += s[r], r--;
+    }
+    for (int i = 0; i &lt; n; i++) {
+        if (i &amp;&amp; i % 80 == 0) putchar('\n');
+        putchar(ans[i]);
+    }
+	return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/p1494-guo-jia-ji-xun-dui-xiao-z-de-wa-zi-mo-ban-mo-dui/">
+              <h3 class="post-title">
+                P1494 [国家集训队]小Z的袜子 /【模板】莫队
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>

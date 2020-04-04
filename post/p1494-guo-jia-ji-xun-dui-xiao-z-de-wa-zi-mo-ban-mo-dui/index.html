@@ -1,0 +1,267 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>P1494 [国家集训队]小Z的袜子 /【模板】莫队 | Shaun</title>
+<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1585990840389">
+<link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
+<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="P1494 [国家集训队]小Z的袜子 /【模板】莫队 | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
+
+
+
+    <meta name="description" content="题目链接
+多组询问求给定区间[li,ri][li, ri][li,ri]中取出相同两个数的概率。
+设区间内某种颜色的数目为cnt[color]。
+则概率为Σcnt[color]∗(cnt[color]−1)(r−l+1)∗(r−l)\fra..." />
+    <meta name="keywords" content="莫队" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+    <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  </head>
+  <body>
+    <div class="main">
+      <div class="main-content">
+        <div class="site-header">
+  <a href="https://shaun118294191.github.io">
+  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1585990840389" alt="">
+  </a>
+  <h1 class="site-title">
+    Shaun
+  </h1>
+  <p class="site-description">
+    Valar morghulis Valar Dohaeris
+  </p>
+  <div class="menu-container">
+    
+      
+        <a href="/" class="menu">
+          首页
+        </a>
+      
+    
+      
+        <a href="/archives" class="menu">
+          归档
+        </a>
+      
+    
+      
+        <a href="/tags" class="menu">
+          标签
+        </a>
+      
+    
+      
+        <a href="/post/about" class="menu">
+          关于
+        </a>
+      
+    
+  </div>
+  <div class="social-container">
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </div>
+</div>
+
+        <div class="post-detail">
+          <article class="post">
+            <h2 class="post-title">
+              P1494 [国家集训队]小Z的袜子 /【模板】莫队
+            </h2>
+            <div class="post-info">
+              <span>
+                2020-04-01
+              </span>
+              <span>
+                5 min read
+              </span>
+              
+                <a href="https://shaun118294191.github.io/tag/l8OsvAAflA/" class="post-tag">
+                  # 莫队
+                </a>
+              
+            </div>
+            
+            <div class="post-content-wrapper">
+              <div class="post-content">
+                <p><a href="https://www.luogu.com.cn/problem/P1494">题目链接</a><br>
+多组询问求给定区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mi>i</mi><mo separator="true">,</mo><mi>r</mi><mi>i</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[li, ri]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">i</span><span class="mclose">]</span></span></span></span>中取出相同两个数的概率。</p>
+<p>设区间内某种颜色的数目为cnt[color]。</p>
+<p>则概率为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mfrac><mrow><mi mathvariant="normal">Σ</mi><mrow></mrow><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>r</mi><mo>]</mo><mo>∗</mo><mo>(</mo><mi>c</mi><mi>n</mi><mi>t</mi><mo>[</mo><mi>c</mi><mi>o</mi><mi>l</mi><mi>o</mi><mi>r</mi><mo>]</mo><mo>−</mo><mn>1</mn><mo>)</mo></mrow><mrow><mo>(</mo><mi>r</mi><mo>−</mo><mi>l</mi><mo>+</mo><mn>1</mn><mo>)</mo><mo>∗</mo><mo>(</mo><mi>r</mi><mo>−</mo><mi>l</mi><mo>)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\Sigma{}cnt[color] * (cnt[color] - 1)}{(r - l + 1) * (r - l)}</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.53em;vertical-align:-0.52em;"></span><span class="mord"><span class="mopen nulldelimiter"></span><span class="mfrac"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:1.01em;"><span style="top:-2.655em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mbin mtight">+</span><span class="mord mtight">1</span><span class="mclose mtight">)</span><span class="mbin mtight">∗</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mbin mtight">−</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mclose mtight">)</span></span></span></span><span style="top:-3.23em;"><span class="pstrut" style="height:3em;"></span><span class="frac-line" style="border-bottom-width:0.04em;"></span></span><span style="top:-3.485em;"><span class="pstrut" style="height:3em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight"><span class="mord mtight">Σ</span><span class="mord mtight"></span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">n</span><span class="mord mathdefault mtight">t</span><span class="mopen mtight">[</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mclose mtight">]</span><span class="mbin mtight">∗</span><span class="mopen mtight">(</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">n</span><span class="mord mathdefault mtight">t</span><span class="mopen mtight">[</span><span class="mord mathdefault mtight">c</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.01968em;">l</span><span class="mord mathdefault mtight">o</span><span class="mord mathdefault mtight" style="margin-right:0.02778em;">r</span><span class="mclose mtight">]</span><span class="mbin mtight">−</span><span class="mord mtight">1</span><span class="mclose mtight">)</span></span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.52em;"><span></span></span></span></span></span><span class="mclose nulldelimiter"></span></span></span></span></span>。</p>
+<ul>
+<li>将询问分块，一般取块的长度为<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>s</mi><mi>q</mi><mi>r</mi><mi>t</mi><mo>(</mo><mi>n</mi><mo>)</mo></mrow><annotation encoding="application/x-tex">sqrt(n)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault">n</span><span class="mclose">)</span></span></span></span> 或<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>n</mi><mi mathvariant="normal">/</mi><mi>s</mi><mi>q</mi><mi>r</mi><mi>t</mi><mo>(</mo><mi>m</mi><mo>∗</mo><mn>2</mn><mo>÷</mo><mn>3</mn><mo>)</mo></mrow><annotation encoding="application/x-tex">n / sqrt(m * 2 \div 3)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathdefault">n</span><span class="mord">/</span><span class="mord mathdefault">s</span><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mord mathdefault">t</span><span class="mopen">(</span><span class="mord mathdefault">m</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">÷</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">3</span><span class="mclose">)</span></span></span></span>。询问所在的块由询问左端点<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">li</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mord mathdefault">i</span></span></span></span>决定。</li>
+</ul>
+<pre><code class="language-cpp">read(n), read(m), Len = n / sqrt(m * 2.0 / 3);
+for (int i = 1; i &lt;= n; i++) cin &gt;&gt; c[i];
+for (int i = 1; i &lt;= m; i++) 
+    read(Q[i].l), read(Q[i].r), Q[i].id = i, Q[i].block = Q[i].l / Len;
+sort(Q + 1, Q + m + 1, cmp1);
+</code></pre>
+<ul>
+<li>排序：询问<span class="katex"><span class="katex-mathml"><math><semantics><mrow><msub><mi>q</mi><mi>i</mi></msub><mo separator="true">,</mo><msub><mi>q</mi><mi>j</mi></msub></mrow><annotation encoding="application/x-tex">q_i, q_j</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.716668em;vertical-align:-0.286108em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.31166399999999994em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight">i</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord"><span class="mord mathdefault" style="margin-right:0.03588em;">q</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.311664em;"><span style="top:-2.5500000000000003em;margin-left:-0.03588em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathdefault mtight" style="margin-right:0.05724em;">j</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.286108em;"><span></span></span></span></span></span></span></span></span></span>所在块相同则其右端点排序，否则块的编号升序排序。</li>
+</ul>
+<pre><code class="language-cpp">struct query {
+    int l, r, id, block, x/*记录询问分子*/, y/*记录询问分母*/;
+}Q[MAXN];
+inline bool cmp1 (const query &amp;a, const query &amp;b) {
+    return (a.block== b.block) ? a.r &lt; b.r : a.block &lt; b.block;
+}
+inline bool cmp2 (const query &amp;a, const query &amp;b) { //按照原始顺序排序
+    return a.id &lt; b.id;
+}
+</code></pre>
+<ul>
+<li>询问时，用指针<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi>l</mi><mo separator="true">,</mo><mi>r</mi></mrow><annotation encoding="application/x-tex">l, r</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.8888799999999999em;vertical-align:-0.19444em;"></span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span></span></span></span>记录上一次询问的位置(初始均为1)，不断加减扩展即可(求的是delta)。</li>
+</ul>
+<p>Code:</p>
+<pre><code class="language-cpp">#include&lt;bits/stdc++.h&gt;
+#define int long long
+constexpr int MAXN = 5e4 + 4;
+using namespace std;
+template &lt;typename T&gt; inline void read(T &amp;x) {
+    int f = 1; x = 0; 
+    char ch = getchar();
+    while (!isdigit(ch)) f = (ch == '-') ? -1 : 1, ch = getchar();
+    while (isdigit(ch)) x = x * 10 + ch - 48, ch = getchar();
+    x *= f;
+}
+int n, m, Len, l, r, ans;
+int c[MAXN], cnt[MAXN];
+struct query {
+    int l, r, id, block, x/*记录询问分子*/, y/*记录询问分母*/;
+}Q[MAXN];
+inline bool cmp1 (const query &amp;a, const query &amp;b) {
+    return (a.block== b.block) ? a.r &lt; b.r : a.block &lt; b.block;
+}
+inline bool cmp2 (const query &amp;a, const query &amp;b) { //按照原始顺序排序
+    return a.id &lt; b.id;
+}
+inline int gcd(int x, int y) {
+    return !y ? x : gcd(y, x % y);
+}
+signed main(){
+    read(n), read(m), Len = n / sqrt(m * 2.0 / 3);
+    for (int i = 1; i &lt;= n; i++) read(c[i]);
+    for (int i = 1; i &lt;= m; i++) 
+        read(Q[i].l), read(Q[i].r), Q[i].id = i, Q[i].block = Q[i].l / Len;
+    sort(Q + 1, Q + m + 1, cmp1);
+    l = 1, r = 0;
+    for (int i = 1; i &lt;= m; i++) {
+        while (r &lt; Q[i].r) {
+            r++;
+            ans -= cnt[c[r]] * (cnt[c[r]] - 1);
+            cnt[c[r]]++;
+            ans += cnt[c[r]] * (cnt[c[r]] - 1);
+        }
+        while (r &gt; Q[i].r) {
+            ans -= cnt[c[r]] * (cnt[c[r]] - 1);
+            cnt[c[r]]--;
+            ans += cnt[c[r]] * (cnt[c[r]] - 1);
+            r--;
+        }
+        while (l &lt; Q[i].l) {
+            ans -= cnt[c[l]] * (cnt[c[l]] - 1);
+            cnt[c[l]]--;
+            ans += cnt[c[l]] * (cnt[c[l]] - 1);
+            l++;
+        }
+        while (l &gt; Q[i].l) {
+            l--;
+            ans -= cnt[c[l]] * (cnt[c[l]] - 1);
+            cnt[c[l]]++;
+            ans += cnt[c[l]] * (cnt[c[l]] - 1);
+        }
+        Q[i].x = ans, Q[i].y = (Q[i].r - Q[i].l + 1) * (Q[i].r - Q[i].l);
+    }
+    sort(Q + 1, Q + m + 1, cmp2);
+    for (int i = 1; i &lt;= m; i++)
+        if (Q[i].l == Q[i].r) puts(&quot;0/1&quot;);
+        else printf(&quot;%lld/%lld\n&quot;, Q[i].x / gcd(Q[i].x, Q[i].y), Q[i].y / gcd(Q[i].x, Q[i].y));
+	return 0;
+}
+</code></pre>
+
+              </div>
+              <div class="toc-container">
+                
+              </div>
+            </div>
+          </article>
+        </div>
+
+        
+          <div class="next-post">
+            <div class="next">下一篇</div>
+            <a href="https://shaun118294191.github.io/post/god-j-and-ancient-tree/">
+              <h3 class="post-title">
+                God J and Ancient Tree
+              </h3>
+            </a>
+          </div>
+        
+
+        
+
+        <div class="site-footer">
+  Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
+  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+    <i class="ri-rss-line"></i> RSS
+  </a>
+</div>
+
+      </div>
+    </div>
+
+    <script>
+      hljs.initHighlightingOnLoad()
+
+      let mainNavLinks = document.querySelectorAll(".markdownIt-TOC a");
+
+      // This should probably be throttled.
+      // Especially because it triggers during smooth scrolling.
+      // https://lodash.com/docs/4.17.10#throttle
+      // You could do like...
+      // window.addEventListener("scroll", () => {
+      //    _.throttle(doThatStuff, 100);
+      // });
+      // Only not doing it here to keep this Pen dependency-free.
+
+      window.addEventListener("scroll", event => {
+        let fromTop = window.scrollY;
+
+        mainNavLinks.forEach((link, index) => {
+          let section = document.getElementById(decodeURI(link.hash).substring(1));
+          let nextSection = null
+          if (mainNavLinks[index + 1]) {
+            nextSection = document.getElementById(decodeURI(mainNavLinks[index + 1].hash).substring(1));
+          }
+          if (section.offsetTop <= fromTop) {
+            if (nextSection) {
+              if (nextSection.offsetTop > fromTop) {
+                link.classList.add("current");
+              } else {
+                link.classList.remove("current");    
+              }
+            } else {
+              link.classList.add("current");
+            }
+          } else {
+            link.classList.remove("current");
+          }
+        });
+      });
+
+    </script>
+  </body>
+</html>
