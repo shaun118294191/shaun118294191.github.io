@@ -3,10 +3,10 @@
     <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Hazardous | Shaun</title>
-<link rel="shortcut icon" href="https://shaun118294191.github.io/favicon.ico?v=1586329214313">
+<link rel="shortcut icon" href="http://localhost:4000/favicon.ico?v=1586329214200">
 <link href="https://cdn.jsdelivr.net/npm/remixicon@2.3.0/fonts/remixicon.css" rel="stylesheet">
-<link rel="stylesheet" href="https://shaun118294191.github.io/styles/main.css">
-<link rel="alternate" type="application/atom+xml" title="Hazardous | Shaun - Atom Feed" href="https://shaun118294191.github.io/atom.xml">
+<link rel="stylesheet" href="http://localhost:4000/styles/main.css">
+<link rel="alternate" type="application/atom+xml" title="Hazardous | Shaun - Atom Feed" href="http://localhost:4000/atom.xml">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700">
 
 
@@ -21,8 +21,8 @@ In order to prepare for potential virus incoming, Country H need to ..." />
     <div class="main">
       <div class="main-content">
         <div class="site-header">
-  <a href="https://shaun118294191.github.io">
-  <img class="avatar" src="https://shaun118294191.github.io/images/avatar.png?v=1586329214313" alt="">
+  <a href="http://localhost:4000">
+  <img class="avatar" src="http://localhost:4000/images/avatar.png?v=1586329214200" alt="">
   </a>
   <h1 class="site-title">
     Shaun
@@ -85,7 +85,7 @@ In order to prepare for potential virus incoming, Country H need to ..." />
                 5 min read
               </span>
               
-                <a href="https://shaun118294191.github.io/tag/33IFEVjGU1/" class="post-tag">
+                <a href="http://localhost:4000/tag/33IFEVjGU1/" class="post-tag">
                   # 线段树合并
                 </a>
               
@@ -115,7 +115,7 @@ Output n lines, on the i-th line print a single integer denoting the hazard scor
 5 1<br>
 OUTPUT<br>
 8 2 0 0 0<br>
-<img src="https://shaun118294191.github.io/post-images/1583408451493.png" alt="" loading="lazy"></p>
+<img src="http://localhost:4000/post-images/1583408451493.png" alt="" loading="lazy"></p>
 <p>采用支持合并的数据结构，下标维护标号，信息维护深度总和与点数，在每个点合并子树信息并维护<br>
 答案。合并的两端的某个颜色的信息分别为 (dep1, cnt1),(dep2, cnt2)，当前点深度为 d，则合并时产生贡献dep1 × cnt2 + dep2 × cnt11- 2d × cnt1 × cnt2（<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mi mathvariant="normal">Σ</mi><mrow><mo>(</mo><mi>d</mi><mn>1</mn><mo>−</mo><mi>d</mi><mo>)</mo></mrow><mo>∗</mo><mi>c</mi><mi>n</mi><mi>t</mi><mn>2</mn><mo>+</mo><mi mathvariant="normal">Σ</mi><mrow><mo>(</mo><mi>d</mi><mn>2</mn><mo>−</mo><mi>d</mi><mo>)</mo></mrow><mo>∗</mo><mi>c</mi><mi>n</mi><mi>t</mi><mn>1</mn></mrow><annotation encoding="application/x-tex">\Sigma{(d1 - d)} * cnt2+ \Sigma{(d2 - d)}  * cnt1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Σ</span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">Σ</span><span class="mord"><span class="mopen">(</span><span class="mord mathdefault">d</span><span class="mord">2</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mord mathdefault">d</span><span class="mclose">)</span></span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∗</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord mathdefault">c</span><span class="mord mathdefault">n</span><span class="mord mathdefault">t</span><span class="mord">1</span></span></span></span>)。</p>
 <p>线段树合并: delta和curdepth为全局变量，dfs后需重新赋值</p>
@@ -204,7 +204,7 @@ int main(){
         
           <div class="next-post">
             <div class="next">下一篇</div>
-            <a href="https://shaun118294191.github.io/post/p1944-zui-chang-gua-hao-pi-pei/">
+            <a href="http://localhost:4000/post/p1944-zui-chang-gua-hao-pi-pei/">
               <h3 class="post-title">
                 P1944 最长括号匹配
               </h3>
@@ -216,7 +216,7 @@ int main(){
 
         <div class="site-footer">
   Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a>
-  <a class="rss" href="https://shaun118294191.github.io/atom.xml" target="_blank">
+  <a class="rss" href="http://localhost:4000/atom.xml" target="_blank">
     <i class="ri-rss-line"></i> RSS
   </a>
 </div>
