@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://shaun118294191.github.io</id>
     <title>Shaun</title>
-    <updated>2020-04-08T07:01:35.412Z</updated>
+    <updated>2020-04-08T07:06:40.380Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://shaun118294191.github.io"/>
     <link rel="self" href="https://shaun118294191.github.io/atom.xml"/>
@@ -16,7 +16,7 @@
         <link href="https://shaun118294191.github.io/post/p4098-heoi2013alo/">
         </link>
         <updated>2020-04-08T06:42:40.000Z</updated>
-        <content type="html"><![CDATA[<p><a href="%E9%A2%98%E7%9B%AE%E9%93%BE%E6%8E%A5">https://www.luogu.com.cn/problem/P4098</a></p>
+        <content type="html"><![CDATA[<p><a href="https://www.luogu.com.cn/problem/P4098">题目链接</a></p>
 <p>题意：</p>
 <ul>
 <li>可以选取一个区间<span class="katex"><span class="katex-mathml"><math><semantics><mrow><mo>[</mo><mi>l</mi><mo separator="true">,</mo><mi>r</mi><mo>]</mo></mrow><annotation encoding="application/x-tex">[l, r]</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">[</span><span class="mord mathdefault" style="margin-right:0.01968em;">l</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathdefault" style="margin-right:0.02778em;">r</span><span class="mclose">]</span></span></span></span>并将区间次大值和区间内的某个数异或，求异或最大值。</li>
